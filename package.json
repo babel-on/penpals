@@ -4,11 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite serve client/",
+    "dev": "concurrently \"vite serve client/\" \"nodemon server/index.js\"",
     "build": "vite build client/",
-    "preview": "vite preview client/"
+    "serve": "cross-env MODE=PRODUCTION nodemon server/index.js"
   },
   "dependencies": {
+    "cross-env": "^7.0.3",
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "mongoose": "^6.6.1",
