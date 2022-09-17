@@ -4,7 +4,7 @@ import './App.scss';
 import { AnimatePresence } from 'framer-motion';
 import Landing from '../pages/Landing/Landing.jsx';
 import Auth from '../pages/Auth/Auth.jsx';
-import Container from '../pages/ChatPage/Container';
+import Container from '../pages/ChatPage/Container.jsx';
 
 const App = () => {
   return (
