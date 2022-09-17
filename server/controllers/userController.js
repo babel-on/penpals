@@ -66,6 +66,7 @@ userController.createUser = async (req, res, next) => {
       username: req.body.username,
       passwordHash: passwordHash,
       language: req.body.language,
+      conversations: {},
     });
     res.locals.user = {
       username: user.username,
@@ -78,7 +79,6 @@ userController.createUser = async (req, res, next) => {
       log: 'Error occured in createUser: ' + err,
       status: 500,
       message: 'An error occured creating the user',
-      conversations: [],
     });
   }
 };
