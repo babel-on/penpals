@@ -7,7 +7,7 @@ dotenv.config();
 
 // API router
 const apiRouter = require('./routes/apiRouter');
-
+const convoRouter = require('./routes/conversationRouter');
 // define port
 const PORT = 3000;
 
@@ -25,6 +25,7 @@ app.use(cookieParser());
 app.use('/api', apiRouter);
 // app.use('/', express.static(path.join(__dirname, '../client')));
 
+app.use('/conversation', convoRouter);
 // serve login page
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/index.html'));
