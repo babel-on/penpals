@@ -6,19 +6,23 @@ const conversationController = {};
 
 conversationController.getConversations = async (req, res, next) => {
   try {
-    const user = await User.findOne({ _id: res.locals.user.userId });
+    const user = await User.findOne({ _id: res.locals.user.userId }).populate(
+      'conversations'
+    );
     res.locals.conversations = user.conversations.map((conversation) => {
-      return {
-        lastAuthor: conversation.messages.at(-1).author,
-        lastContent: conversation.messages.at(-1).content,
-        lastTime: conversation.messages.at(-1).createdAt,
-        messageCount: conversation.messages.length,
-      };
+      if (conversation.messages.length === 0) return { messageCount: 0 };
+      else
+        return {
+          lastAuthor: conversation.messages.at(-1).author,
+          lastContent: conversation.messages.at(-1).content,
+          lastTime: conversation.messages.at(-1).createdAt,
+          messageCount: conversation.messages.length,
+        };
     });
     next();
   } catch (err) {
     next({
-      log: 'Error occured in getConversations',
+      log: 'Error occured in getConversations: ' + err,
       status: 500,
       message: 'An error occured retriving conversation list',
     });
@@ -64,13 +68,19 @@ conversationController.getConversation = async (req, res, next) => {
 };
 
 conversationController.addConversation = async (req, res, next) => {
+  console.log(res.locals);
   try {
     // verify user jwt before this
     const user = await User.findOne({ _id: res.locals.user.userId });
     // right now this is blank,
     // later, we might also want to specifiy another user(s) to also add this convo ref to
-    const conversation = Conversation.create({ users: [user] });
+    const conversation = await Conversation.create({
+      users: [user],
+      messages: [],
+    });
     user.conversations.push(conversation);
+    await user.save();
+    res.locals.conversation = { id: conversation._id };
     next();
   } catch (err) {
     next({

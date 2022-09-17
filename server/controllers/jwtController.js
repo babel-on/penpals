@@ -32,6 +32,7 @@ jwtController.verify = (req, res, next) => {
   }
   try {
     res.locals.user = jwt.verify(req.cookies.jwt, JWT_SECRET);
+    next();
   } catch (err) {
     next({
       log: null,

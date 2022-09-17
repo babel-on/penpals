@@ -1,10 +1,12 @@
 const express = require('express');
 const jwtController = require('../controllers/jwtController.js');
+const conversationRouter = require('./conversationRouter');
 const router = express.Router();
 // require controller
 const userController = require('../controllers/userController.js');
 
 //handle login
+router.use('/conversation', conversationRouter);
 router.post(
   '/login',
   userController.verifyUser,
