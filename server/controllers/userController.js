@@ -19,10 +19,12 @@ userController.createUser = (req, res, next) => {
         })
         .catch(err => next({
           log: 'userController.createUser ERROR',
+          status: 500,
           message: {err: 'userController.createUser ERROR: Username already exists'}}))
     })
     .catch(err => next({
       log: 'userController.createUser ERROR',
+      status: 500,
       message: {err: 'userController.createUser ERROR: Password has failed'}
     }));
 };
@@ -38,11 +40,13 @@ userController.verifyUser = async (req, res, next) => {
     }
     return next({
       log: 'userController.verifyUser ERROR',
+      status: 500,
       message: {err: 'userController.verifyUser ERROR: Invalid Username or password'}
     })
   } catch {
     return next({
       log: 'userController.verifyUser ERROR',
+      status: 500,
       message: {err: 'userController.verifyUser ERROR: Error verifying user'}
     });
   }
