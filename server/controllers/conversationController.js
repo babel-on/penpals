@@ -6,19 +6,19 @@ const conversationController = {};
 
 conversationController.getConversations = async (req, res, next) => {
   try {
-    const user = await User.findOne({ _id: res.locals.user.userId });
-    console.log(user.conversations);
-    console.log(user.conversations[0].messages);
-    // res.locals.conversations = user.conversations.map((conversation) => {
-    // if (conversation.messages.length === 0) return { messageCount: 0 };
-    // else
-    //   return {
-    //     lastAuthor: conversation.messages.at(-1).author,
-    //     lastContent: conversation.messages.at(-1).content,
-    //     lastTime: conversation.messages.at(-1).createdAt,
-    //     messageCount: conversation.messages.length,
-    //   };
-    // });
+    const user = await User.findOne({ _id: res.locals.user.userId }).populate(
+      'conversations'
+    );
+    res.locals.conversations = user.conversations.map((conversation) => {
+      if (conversation.messages.length === 0) return { messageCount: 0 };
+      else
+        return {
+          lastAuthor: conversation.messages.at(-1).author,
+          lastContent: conversation.messages.at(-1).content,
+          lastTime: conversation.messages.at(-1).createdAt,
+          messageCount: conversation.messages.length,
+        };
+    });
     next();
   } catch (err) {
     next({
