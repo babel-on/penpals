@@ -5,6 +5,7 @@ import Container from '../components/Container';
 
 const App = () => {
   return (
+<<<<<<< HEAD
     <div className="router app">
       <main>
         <Switch>
@@ -15,6 +16,9 @@ const App = () => {
           />
         </Switch>
       </main>
+=======
+    <div>
+>>>>>>> jigar
     </div>
   );
 };
