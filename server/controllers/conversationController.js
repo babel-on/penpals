@@ -35,7 +35,7 @@ conversationController.getConversation = async (req, res, next) => {
       return next({
         log: null,
         status: 400,
-        message: "That conversation doesn't exist",
+        message: 'That conversation does not exist',
       });
     for (const message of conversation.messages) {
       if (!(lang in message.translations)) {
@@ -69,7 +69,7 @@ conversationController.addConversation = async (req, res, next) => {
     const user = await User.findOne({ _id: res.locals.userId });
     // right now this is blank,
     // later, we might also want to specifiy another user(s) to also add this convo ref to
-    const conversation = Conversation.create({});
+    const conversation = Conversation.create({ users: [user] });
     user.conversations.push(conversation);
     next();
   } catch (err) {
@@ -106,6 +106,35 @@ conversationController.addMessageToConversation = async (req, res, next) => {
       log: 'Error occured in addMessageToConversation',
       status: 500,
       message: 'An error occured adding a message',
+    });
+  }
+};
+
+conversationController.addUserToConversation = async (req, res, next) => {
+  try {
+    // verify user jwt before this
+    const [user, invitee, conversation] = await Promise.all([
+      User.findOne({ _id: res.locals.userId }),
+      User.findOne({ _id: req.body.id }),
+      Conversation.findOne({ _id: req.params.id }),
+    ]);
+    // user is the current user who is adding a friend to the convo
+    if (!(user in conversation.users))
+      return next({
+        log: null,
+        err: 403,
+        message:
+          'You cannot add a user to a conversation that you are not a part of',
+      });
+    invitee.conversations.push(conversation);
+    conversation.users.push(invitee);
+    await Promise.all([invitee.save(), conversation.save()]);
+    next();
+  } catch (err) {
+    next({
+      log: 'Error occured in addUserToConversation',
+      status: 500,
+      message: 'An error occured user to conversation',
     });
   }
 };
