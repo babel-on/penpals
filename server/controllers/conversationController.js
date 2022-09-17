@@ -51,6 +51,7 @@ conversationController.getConversation = async (req, res, next) => {
         message: 'You are not a member of this conversations',
       });
     for (const message of conversation.messages) {
+      console.log(message);
       if (!(lang in message.translations)) {
         const translation = await fetchTranslation(lang, message.content);
         // message.translations[lang] = await fetchTranslation(
@@ -58,9 +59,9 @@ conversationController.getConversation = async (req, res, next) => {
         //   message.content
         // );
         message.translations[lang] = translation.text;
+        conversation.markModified('messages');
       }
     }
-    await conversation.save();
     res.locals.conversation = conversation.messages.map((message) => {
       return {
         author: message.author,
@@ -68,6 +69,8 @@ conversationController.getConversation = async (req, res, next) => {
         content: message.translations[lang],
       };
     });
+    console.log(conversation.messages[0].translations);
+    await conversation.save();
     next();
   } catch (err) {
     next({
