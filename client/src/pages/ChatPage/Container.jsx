@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Navbar from './Navbar';
+import Navbar from '../../components/Chat/Navbar';
 
-import ChatContainer from './ChatContainer';
+import ChatContainer from '../../components/Chat/ChatContainer';
 
-import ConvoContainer from './ConvoContainer';
+import ConvoContainer from '../../components/Chat/ConvoContainer';
 
 class Container extends React.Component {
   constructor(){
