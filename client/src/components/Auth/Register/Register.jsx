@@ -7,13 +7,13 @@ const Register = () => {
   const { register, handleSubmit, watch, reset } = useForm();
 
   const onSubmit = (data) => {
-    fetch('/register', {
+    fetch('/api/register', {
       method: 'POST',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...data, language: 'EN-US' }),
     }).then(() => reset());
   };
 

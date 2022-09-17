@@ -6,7 +6,7 @@ const Login = ({ handleClick }) => {
   const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = (data) =>
-    fetch('/login', {
+    fetch('/api/login', {
       method: 'POST',
       mode: 'cors',
       headers: {
