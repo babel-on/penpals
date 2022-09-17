@@ -32,7 +32,7 @@ const Auth = () => {
               <img src="/chatting.png" alt="" />
             </div>
             {isRegister ? (
-              <Register />
+              <Register handleClick={() => setIsRegister(false)} />
             ) : (
               <Login handleClick={() => setIsRegister(true)} />
             )}

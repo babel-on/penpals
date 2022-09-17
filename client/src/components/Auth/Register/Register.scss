@@ -78,6 +78,41 @@
         box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
       }
     }
+
+    .custom-select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      height: 57px;
+      padding: 10px 38px 10px 16px;
+      background: #fff url('select-arrows.svg') no-repeat right 16px center;
+      background-size: 10px;
+      transition: border-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+    }
+    .custom-select:hover {
+      border: 1px solid #999;
+    }
+    .custom-select:focus {
+      border: 1px solid #999;
+      box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2);
+      outline: none;
+    }
+
+    .select-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      label {
+        color: #595f6e;
+      }
+
+      select:focus ~ label,
+      select:valid ~ label {
+        color: rgb(61, 62, 159);
+      }
+    }
   }
 
   .input-container {
