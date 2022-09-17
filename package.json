@@ -3,9 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "concurrently \"vite serve client/\" \"nodemon server/index.js\"",
+    "dev": "concurrently \"vite serve client/\" \"nodemon server/server.js\"",
     "build": "vite build client/",
-    "serve": "cross-env MODE=PRODUCTION nodemon server/index.js"
+    "serve": "cross-env MODE=PRODUCTION nodemon server/server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
