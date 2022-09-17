@@ -81,4 +81,33 @@ conversationController.addConversation = async (req, res, next) => {
   }
 };
 
+conversationController.addMessageToConversation = async (req, res, next) => {
+  try {
+    // verify user jwt before this
+    const user = await User.findOne({ _id: res.locals.userId });
+    const conversation = user.conversations.find(
+      (convo) => convo._id.toString() === req.params.id
+    );
+    if (!conversation)
+      return next({
+        log: null,
+        status: 404,
+        message:
+          'Cannot find conversation. Conversations are only available to users in them',
+      });
+    conversation.messages.push({
+      author: res.locals.username,
+      content: req.body.content,
+      translations: {},
+    });
+    user.save();
+  } catch (err) {
+    next({
+      log: 'Error occured in addMessageToConversation',
+      status: 500,
+      message: 'An error occured adding a message',
+    });
+  }
+};
+
 module.exports = conversationController;
