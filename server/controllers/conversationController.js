@@ -32,10 +32,8 @@ conversationController.getConversations = async (req, res, next) => {
 };
 
 conversationController.getConversation = async (req, res, next) => {
-  // needs checking if the user (from previous middleware function) has access to this convo
-  // will do later when the method is clearer
   try {
-    const lang = res.locals.language;
+    const lang = res.locals.user.language;
     const conversation = await Conversation.findOne({ _id: req.params.id });
     if (!conversation)
       return next({
@@ -43,12 +41,23 @@ conversationController.getConversation = async (req, res, next) => {
         status: 400,
         message: 'That conversation does not exist',
       });
+    const userHasAccess = conversation.users.find(
+      (user) => user._id.toString() === res.locals.user.userId
+    );
+    if (!userHasAccess)
+      return next({
+        log: null,
+        status: 403,
+        message: 'You are not a member of this conversations',
+      });
     for (const message of conversation.messages) {
       if (!(lang in message.translations)) {
-        message.translations[lang] = await fetchTranslation(
-          lang,
-          message.content
-        );
+        const translation = await fetchTranslation(lang, message.content);
+        // message.translations[lang] = await fetchTranslation(
+        //   lang,
+        //   message.content
+        // );
+        message.translations[lang] = translation.text;
       }
     }
     await conversation.save();
@@ -62,7 +71,7 @@ conversationController.getConversation = async (req, res, next) => {
     next();
   } catch (err) {
     next({
-      log: 'Error occured in getConversation',
+      log: 'Error occured in getConversation: ' + err,
       status: 500,
       message: 'An error occured retriving messages',
     });
