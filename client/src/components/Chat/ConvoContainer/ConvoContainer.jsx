@@ -1,6 +1,6 @@
 import React from 'react';
-
-import ConvoPreview from './ConvoPreview';
+import './ConvoContainer.scss';
+import ConvoPreview from '../ConvoPreview/ConvoPreview';
 
 const ConvoContainer = props => {
 

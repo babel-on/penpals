@@ -94,6 +94,7 @@ userController.verifyUser = async (req, res, next) => {
     );
     console.log(user, passwordOk);
     if (passwordOk) {
+      console.log(user);
       res.locals.user = user;
       return next();
     }

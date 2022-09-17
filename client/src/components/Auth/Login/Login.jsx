@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import UserContext from '../../../context/UserContext';
 import { useForm } from 'react-hook-form';
 import './Login.scss';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const Login = ({ handleClick }) => {
   const { register, handleSubmit, reset } = useForm();
+  const navigate = useNavigate();
+  const {user, handleUser} = useContext(UserContext);
 
   const onSubmit = (data) =>
     fetch('/api/login', {
@@ -19,6 +23,8 @@ const Login = ({ handleClick }) => {
         if (res.ok) return res.json();
         else throw new Error('Invalid username or password!');
       })
+      .then((data) => handleUser(data))
+      .then(() => navigate('/chat'))
       .then(() => reset())
       .catch((e) => console.log(e));
 

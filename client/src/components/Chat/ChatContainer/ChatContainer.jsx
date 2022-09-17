@@ -1,7 +1,7 @@
 import React from 'react';
-
-import MessageBox from './MessageBox';
-import MessageCreator from './MessageCreator';
+import './ChatContainer.scss';
+import MessageBox from '../MessageBox/MessageBox';
+import MessageCreator from '../MessageCreator/MessageCreator';
 
 const ChatContainer = props => {
   return (
