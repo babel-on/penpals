@@ -1,17 +1,21 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route} from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.scss';
+import { AnimatePresence } from 'framer-motion';
 import Landing from '../pages/Landing/Landing.jsx';
+import Auth from '../pages/Auth/Auth.jsx';
 import Container from '../components/Container.jsx';
-
 
 const App = () => {
   return (
-    <BrowserRouter> 
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path='/chat' component={Container} />
-      </Routes>
+    <BrowserRouter>
+      <AnimatePresence exitBeforeEnter>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/chat" component={Container} />
+        </Routes>
+      </AnimatePresence>
     </BrowserRouter>
   );
 };
