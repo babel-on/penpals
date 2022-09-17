@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const userController = {};
+const bcrypt = require('bcryptjs');
 
 // create user
 userController.createUser = (req, res, next) => {
@@ -25,7 +26,7 @@ userController.verifyUser = (req, res, next) => {
     passwordhash: req.body.password,
   })
     .then((data) => {
-      if (data) {
+      if (data && bcrypt.compareSync(req.body.password,this.password)) {
         res.locals.userData = data; 
         return next(); 
       }
