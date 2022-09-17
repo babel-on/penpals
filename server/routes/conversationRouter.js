@@ -5,10 +5,19 @@ const router = express.Router();
 
 router.get(
   '/',
-  jwtController.verifyUser,
+  jwtController.verify,
   conversationController.getConversations,
   (req, res) => {
     res.status(200).json(res.locals.conversations);
+  }
+);
+
+router.post(
+  '/',
+  jwtController.verify,
+  conversationController.addConversation,
+  (req, res) => {
+    res.status(200).json(res.locals.conversation);
   }
 );
 

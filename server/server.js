@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
 dotenv.config();
 
 // API router
@@ -18,7 +19,8 @@ mongoose.connect(mongoURI).then(() => console.log('Connected to MongoDB'));
  * handle parsing request body
  */
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 app.use('/api', apiRouter);
 // app.use('/', express.static(path.join(__dirname, '../client')));
@@ -38,6 +40,7 @@ app.use('*', (req, res) => {
 
 // global Err handler
 app.use((err, req, res, next) => {
+  console.log(err);
   const defaultError = {
     log: 'Unknown error occurred',
     status: 500,
