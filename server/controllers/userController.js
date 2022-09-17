@@ -9,7 +9,8 @@ const langCode = {
   DA: 'Danish',
   DE: 'German',
   EL: 'Greek',
-  EN: 'English',
+  'EN-GB': 'English (British)',
+  'EN-US': 'English (American)',
   ES: 'Spanish',
   ET: 'Estonian',
   FI: 'Finnish',
@@ -22,15 +23,15 @@ const langCode = {
   LV: 'Latvian',
   NL: 'Dutch',
   PL: 'Polish',
-  PT: 'Portuguese',
-  RO: 'Romanian',
+  'PT-BR': 'Portuguese (Brazilian)',
+  'PT-PT ': 'Portuguese (Other)',
   RU: 'Russian',
   SK: 'Slovak',
   SL: 'Slovenian',
   SV: 'Swedish',
   TR: 'Turkish',
   UK: 'Ukrainian',
-  ZH: 'Chinese',
+  ZH: 'Chinese ',
 };
 // create user
 userController.createUser = async (req, res, next) => {
@@ -52,13 +53,13 @@ userController.createUser = async (req, res, next) => {
       status: 400,
       message: 'Language required',
     });
-  if(!langCode.hasOwnProperty(req.body.language))
+  if (!langCode.hasOwnProperty(req.body.language))
     return next({
-      log:null,
-      status:400,
-      message: 'Language not supported'
+      log: null,
+      status: 400,
+      message: 'Language not supported',
     });
-    
+
   try {
     const passwordHash = await bcrypt.hash(req.body.password, SALT_WORK_FACTOR);
     const user = await User.create({
