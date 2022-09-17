@@ -18,7 +18,7 @@ mongoose.connect(mongoURI).then(() => console.log('Connected to MongoDB'));
  * handle parsing request body
  */
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended: true}));
 
 app.use('/api', apiRouter);
 // app.use('/', express.static(path.join(__dirname, '../client')));
