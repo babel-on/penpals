@@ -1,19 +1,35 @@
 import React from 'react';
-import {useForm} from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import './Login.scss';
 
-const Login = () => {
-
+const Login = ({ handleClick }) => {
   const { register, handleSubmit, reset } = useForm();
 
+  const onSubmit = (data) =>
+    fetch('/login', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+        else throw new Error('Invalid username or password!');
+      })
+      .then(() => reset())
+      .catch((e) => console.log(e));
+
   return (
-    <div className='login'>
+    <div className="login">
       <section className="login-container">
         <h2>Login</h2>
         <p>
-          Did you <a href="#">forget your password?</a>
+          Don&apos;t have an account?{' '}
+          <a onClick={handleClick}>Become a Penpal</a>
         </p>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-container">
             <div className="input-wrapper">
               <input

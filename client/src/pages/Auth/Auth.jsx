@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Auth.scss';
 import Login from '../../components/Auth/Login/Login.jsx';
+import Register from '../../components/Auth/Register/Register.jsx';
 import { motion } from 'framer-motion';
 
 const Auth = () => {
+  const [isRegister, setIsRegister] = useState(false);
+
   const animations = {
     initial: { opacity: 0, y: 100 },
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -100 },
   };
+
   return (
     <main className="auth">
       <motion.div
@@ -27,7 +31,11 @@ const Auth = () => {
               </div>
               <img src="/chatting.png" alt="" />
             </div>
-            <Login />
+            {isRegister ? (
+              <Register />
+            ) : (
+              <Login handleClick={() => setIsRegister(true)} />
+            )}
           </div>
         </section>
       </motion.div>
