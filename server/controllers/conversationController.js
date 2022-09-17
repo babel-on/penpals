@@ -5,9 +5,8 @@ const fetchTranslation = require('../utls/fetchTranslation');
 const conversationController = {};
 
 conversationController.getConversations = async (req, res, next) => {
-  // LATER, find out where this userID is being saved in prev middleware
   try {
-    const user = await User.findOne({ _id: res.locals.userId });
+    const user = await User.findOne({ _id: res.locals.user.userId });
     res.locals.conversations = user.conversations.map((conversation) => {
       return {
         lastAuthor: conversation.messages.at(-1).author,
@@ -66,7 +65,7 @@ conversationController.getConversation = async (req, res, next) => {
 conversationController.addConversation = async (req, res, next) => {
   try {
     // verify user jwt before this
-    const user = await User.findOne({ _id: res.locals.userId });
+    const user = await User.findOne({ _id: res.locals.user.userId });
     // right now this is blank,
     // later, we might also want to specifiy another user(s) to also add this convo ref to
     const conversation = Conversation.create({ users: [user] });
@@ -84,7 +83,7 @@ conversationController.addConversation = async (req, res, next) => {
 conversationController.addMessageToConversation = async (req, res, next) => {
   try {
     // verify user jwt before this
-    const user = await User.findOne({ _id: res.locals.userId });
+    const user = await User.findOne({ _id: res.locals.user.userId });
     const conversation = user.conversations.find(
       (convo) => convo._id.toString() === req.params.id
     );
@@ -114,7 +113,7 @@ conversationController.addUserToConversation = async (req, res, next) => {
   try {
     // verify user jwt before this
     const [user, invitee, conversation] = await Promise.all([
-      User.findOne({ _id: res.locals.userId }),
+      User.findOne({ _id: res.locals.user.userId }),
       User.findOne({ _id: req.body.id }),
       Conversation.findOne({ _id: req.params.id }),
     ]);
