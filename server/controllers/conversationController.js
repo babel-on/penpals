@@ -10,9 +10,11 @@ conversationController.getConversations = async (req, res, next) => {
       'conversations'
     );
     res.locals.conversations = user.conversations.map((conversation) => {
-      if (conversation.messages.length === 0) return { messageCount: 0 };
+      if (conversation.messages.length === 0)
+        return { id: conversation._id, messageCount: 0 };
       else
         return {
+          id: conversation._id,
           lastAuthor: conversation.messages.at(-1).author,
           lastContent: conversation.messages.at(-1).content,
           lastTime: conversation.messages.at(-1).createdAt,
@@ -92,9 +94,12 @@ conversationController.addConversation = async (req, res, next) => {
 };
 
 conversationController.addMessageToConversation = async (req, res, next) => {
+  console.log(req.body);
   try {
     // verify user jwt before this
-    const user = await User.findOne({ _id: res.locals.user.userId });
+    const user = await User.findOne({ _id: res.locals.user.userId }).populate(
+      'conversations'
+    );
     const conversation = user.conversations.find(
       (convo) => convo._id.toString() === req.params.id
     );
@@ -105,15 +110,20 @@ conversationController.addMessageToConversation = async (req, res, next) => {
         message:
           'Cannot find conversation. Conversations are only available to users in them',
       });
-    conversation.messages.push({
-      author: res.locals.username,
+    const message = {
+      author: res.locals.user.username,
       content: req.body.content,
-      translations: {},
-    });
-    user.save();
+      translations: {
+        [res.locals.user.language]: req.body.content,
+      },
+    };
+    conversation.messages.push(message);
+    res.locals.message = message;
+    Promise.all([user.save(), conversation.save()]);
+    next();
   } catch (err) {
     next({
-      log: 'Error occured in addMessageToConversation',
+      log: 'Error occured in addMessageToConversation: ' + err,
       status: 500,
       message: 'An error occured adding a message',
     });
