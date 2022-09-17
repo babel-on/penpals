@@ -1,5 +1,6 @@
 const Conversation = require('../models/conversationModel');
 const User = require('../models/userModel');
+const fetchTranslation = require('../utls/fetchTranslation');
 
 const conversationController = {};
 
@@ -38,7 +39,7 @@ conversationController.getConversation = async (req, res, next) => {
       });
     for (const message of conversation.messages) {
       if (!(lang in message.translations)) {
-        message.translations[lang] = await FetchTranslation(
+        message.translations[lang] = await fetchTranslation(
           lang,
           message.content
         );
@@ -58,6 +59,24 @@ conversationController.getConversation = async (req, res, next) => {
       log: 'Error occured in getConversation',
       status: 500,
       message: 'An error occured retriving messages',
+    });
+  }
+};
+
+conversationController.addConversation = async (req, res, next) => {
+  try {
+    // verify user jwt before this
+    const user = await User.findOne({ _id: res.locals.userId });
+    // right now this is blank,
+    // later, we might also want to specifiy another user(s) to also add this convo ref to
+    const conversation = Conversation.create({});
+    user.conversations.push(conversation);
+    next();
+  } catch (err) {
+    next({
+      log: 'Error occured in addConversation',
+      status: 500,
+      message: 'An error occured creating a conversation',
     });
   }
 };

@@ -9,6 +9,8 @@ const fetchTranslation = (lang, content) => {
   return translator.translateText(content, null, lang);
 };
 
-fetchTranslation('JA', 'I really hope this works this time around!').then(
-  (res) => console.log(res)
-);
+module.exports = fetchTranslation;
+
+// fetchTranslation('JA', 'I really hope this works this time around!').then(
+//   (res) => console.log(res)
+// );
