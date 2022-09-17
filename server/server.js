@@ -7,9 +7,7 @@ const apiRouter = require('./routes/apiRouter');
 // define port
 const PORT = 3000;
 
-// CORS if needed
-// const cors = require('cors');
-// app.use(cors());
+const app = express();
 
 /**
  * handle parsing request body
@@ -21,7 +19,7 @@ app.use('/', express.static(path.join(__dirname, '../client')));
 
 // serve login page
 app.use('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname,'../client/index.html'))
+  res.sendFile(path.resolve(__dirname, '../client/index.html'));
 });
 
 // forward all request to API router
@@ -35,8 +33,14 @@ app.use('*', (req, res) => {
 
 // global Err handler
 app.use((err, req, res, next) => {
-  console.log(err);
-  res.status(500).send({ Error: err });
+  const defaultError = {
+    log: 'Unknown error occured',
+    status: '500',
+    message: 'An error occured',
+  };
+  const error = Object.assign(defaultError, err);
+  if (error.log) console.log(error.log);
+  res.status(error.status).json({ error: error.message });
 });
 
 app.listen(PORT, () => {
