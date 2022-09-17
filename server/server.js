@@ -34,17 +34,17 @@ app.use('*', (req, res) => {
 // global Err handler
 app.use((err, req, res, next) => {
   const defaultError = {
-    log: 'Unknown error occured',
-    status: '500',
-    message: 'An error occured',
+    log: 'Express error handler caught unknown middleware error',
+    status: 500,
+    message: {err: 'An error occurred'},
   };
-  const error = Object.assign(defaultError, err);
-  if (error.log) console.log(error.log);
-  res.status(error.status).json({ error: error.message });
+  const errorObj = Object.assign({}, defaultError, err);
+  console.log(errorObj.log);
+  return res.status(errorObj.status).json(errorObj.message);
 });
 
 app.listen(PORT, () => {
-  console.log(`Lisening on port ${PORT}...`);
+  console.log(`Listening on port ${PORT}...`);
 });
 
 module.exports = app;

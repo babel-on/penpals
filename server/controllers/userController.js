@@ -2,36 +2,50 @@ const User = require('../models/userModel');
 const userController = {};
 const bcrypt = require('bcryptjs');
 
+const SALT_WORK_FACTOR = 10;
+
 // create user
 userController.createUser = (req, res, next) => {
-  User.create({
-    // password value might need to be chaged when we have bcrypt done
-    username: req.body.username,
-    passwordhash: req.body.password,
-    language: req.body.language,
-  })
-    .then((data) => {
-      res.locals.userData = data;
-      return next();
+  bcrypt.hash(req.body.password, SALT_WORK_FACTOR)
+    .then((hashedPass) => {
+      User.create({
+        username: req.body.username,
+        passwordHash: hashedPass,
+        language: req.body.language
+      })
+        .then(createdUser => {
+          res.locals.createdUser = createdUser;
+          next();
+        })
+        .catch(err => next({
+          log: 'userController.createUser ERROR',
+          message: {err: 'userController.createUser ERROR: Username already exists'}}))
     })
-    .catch((e) => next(e));
+    .catch(err => next({
+      log: 'userController.createUser ERROR',
+      message: {err: 'userController.createUser ERROR: Password has failed'}
+    }));
 };
 
 // verify user
-userController.verifyUser = (req, res, next) => {
-  User.findOne({
-    // finding user based on user name and password
-    username: req.body.username,
-    // password value might need to be chaged when we have bcrypt done
-    passwordhash: req.body.password,
-  })
-    .then((data) => {
-      if (data && bcrypt.compareSync(req.body.password,this.password)) {
-        res.locals.userData = data; 
-        return next(); 
-      }
-      else return next('Error, username or password incorrect.');
+userController.verifyUser = async (req, res, next) => {
+  try {
+    const user = await User.findOne({username: req.body.username});
+    const passwordOk = await bcrypt.compare(req.body.password, user.password);
+    if (passwordOk){
+      res.locals.user = user;
+      return next();
+    }
+    return next({
+      log: 'userController.verifyUser ERROR',
+      message: {err: 'userController.verifyUser ERROR: Invalid Username or password'}
+    })
+  } catch {
+    return next({
+      log: 'userController.verifyUser ERROR',
+      message: {err: 'userController.verifyUser ERROR: Error verifying user'}
     });
+  }
 };
 
 module.exports = userController;
