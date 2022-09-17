@@ -1,10 +1,7 @@
 import React from 'react';
-
-import Navbar from '../../components/Chat/Navbar';
-
-import ChatContainer from '../../components/Chat/ChatContainer';
-
-import ConvoContainer from '../../components/Chat/ConvoContainer';
+import Navbar from '../../components/Chat/Navbar/Navbar.jsx';
+import ChatContainer from '../../components/Chat/ChatContainer/ChatContainer.jsx';
+import ConvoContainer from '../../components/Chat/ConvoContainer/ConvoContainer.jsx';
 import UserContext from '../../context/UserContext';
 
 class Container extends React.Component {
@@ -18,16 +15,10 @@ class Container extends React.Component {
   render(){
 
     return (
-      
-      <div>
-        <UserContext.Consumer>
-          {value => <h1>{value}</h1>}
-        </UserContext.Consumer>
-        <div className='container'>
-          <Navbar />
-          <ChatContainer />
-          <ConvoContainer />
-        </div>
+      <div className='container'>
+        <Navbar />
+        <ChatContainer />
+        <ConvoContainer />
       </div>
     );
   }
