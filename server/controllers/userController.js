@@ -5,59 +5,72 @@ const bcrypt = require('bcryptjs');
 const SALT_WORK_FACTOR = 10;
 
 // create user
-userController.createUser = (req, res, next) => {
-  bcrypt
-    .hash(req.body.password, SALT_WORK_FACTOR)
-    .then((hashedPass) => {
-      User.create({
-        username: req.body.username,
-        passwordHash: hashedPass,
-        language: req.body.language,
-      })
-        .then((createdUser) => {
-          res.locals.createdUser = createdUser;
-          next();
-        })
-        .catch((err) =>
-          next({
-            log: 'userController.createUser ERROR',
-            status: 500,
-            message: {
-              err: 'userController.createUser ERROR: Username already exists',
-            },
-          })
-        );
-    })
-    .catch((err) =>
-      next({
-        log: 'userController.createUser ERROR',
-        status: 500,
-        message: {
-          err: 'userController.createUser ERROR: Password has failed',
-        },
-      })
-    );
+userController.createUser = async (req, res, next) => {
+  if (!req.body.username)
+    return next({
+      log: null,
+      status: 400,
+      message: 'Username required',
+    });
+  if (!req.body.password)
+    return next({
+      log: null,
+      status: 400,
+      message: 'Password required',
+    });
+  if (!req.body.language)
+    return next({
+      log: null,
+      status: 400,
+      message: 'Language required',
+    });
+  try {
+    const passwordHash = await bcrypt.hash(req.body.password, SALT_WORK_FACTOR);
+    const user = await User.create({
+      username: req.body.username,
+      passwordHash: passwordHash,
+      language: req.body.language,
+    });
+    res.locals.user = {
+      username: user.username,
+      userId: user._id,
+      language: user.language,
+    };
+    next();
+  } catch (err) {
+    next({
+      log: 'Error occured in createUser: ' + err,
+      status: 500,
+      message: 'An error occured creating the user',
+      conversations: [],
+    });
+  }
 };
 
 // verify user
 userController.verifyUser = async (req, res, next) => {
+  console.log('in verifyuser');
   try {
     const user = await User.findOne({ username: req.body.username });
-    const passwordOk = await bcrypt.compare(req.body.password, user.password);
+    const passwordOk = await bcrypt.compare(
+      req.body.password,
+      user.passwordHash
+    );
+    console.log(user, passwordOk);
     if (passwordOk) {
       res.locals.user = user;
       return next();
     }
     return next({
-      log: 'userController.verifyUser ERROR',
+      log: null,
       status: 500,
       message: {
         err: 'userController.verifyUser ERROR: Invalid Username or password',
       },
     });
-  } catch {
+  } catch (err) {
     return next({
-      log: 'userController.verifyUser ERROR',
+      log: 'userController.verifyUser ERROR: ' + err,
       status: 500,
       message: { err: 'userController.verifyUser ERROR: Error verifying user' },
     });

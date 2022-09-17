@@ -1,5 +1,8 @@
 const express = require('express');
 const path = require('path');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+dotenv.config();
 
 // API router
 const apiRouter = require('./routes/apiRouter');
@@ -8,6 +11,8 @@ const apiRouter = require('./routes/apiRouter');
 const PORT = 3000;
 
 const app = express();
+const mongoURI = process.env.MONGO_URI;
+mongoose.connect(mongoURI).then(() => console.log('Connected to MongoDB'));
 
 /**
  * handle parsing request body
@@ -15,15 +20,15 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded());
 
-app.use('/', express.static(path.join(__dirname, '../client')));
+app.use('/api', apiRouter);
+// app.use('/', express.static(path.join(__dirname, '../client')));
 
 // serve login page
-app.use('/', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/index.html'));
 });
 
 // forward all request to API router
-app.use('/api', apiRouter);
 
 // catch all unknown routes
 app.use('*', (req, res) => {
@@ -35,8 +40,8 @@ app.use('*', (req, res) => {
 app.use((err, req, res, next) => {
   const defaultError = {
     log: 'Unknown error occurred',
-    status: '500',
-    message: 'An error occurred'
+    status: 500,
+    message: 'An error occurred',
   };
   const error = Object.assign(defaultError, err);
   if (error.log) console.log(error.log);
@@ -48,4 +53,3 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
-
