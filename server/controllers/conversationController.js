@@ -12,6 +12,7 @@ conversationController.getConversations = async (req, res, next) => {
         lastAuthor: conversation.messages.at(-1).author,
         lastContent: conversation.messages.at(-1).content,
         lastTime: conversation.messages.at(-1).createdAt,
+        messageCount: conversation.messages.length,
       };
     });
     next();
