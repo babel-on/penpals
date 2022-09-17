@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const conversationSchema = new mongoose.Schema({
-  message: [
+  messages: [
     {
       author: { type: String, required: true },
       content: { type: String, required: true },
