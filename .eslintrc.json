@@ -1,31 +1,30 @@
 {
-  "extends": [
-    "airbnb",
-    "plugin:prettier/recommended"
-  ],
+  "root": true,
+  "ignorePatterns": ["**/test", "**/__tests__"],
   "env": {
+    "node": true,
     "browser": true,
-    "commonjs": true,
-    "es6": true,
-    "jest": true,
-    "node": true
+    "es2021": true
+  },
+  "plugins": ["react"],
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
   },
   "rules": {
-    "jsx-a11y/href-no-hash": ["off"],
-    "react/jsx-filename-extension": ["warn", { "extensions": [".js", ".jsx"] }],
-    "max-len": [
-      "warn",
-      {
-        "code": 80,
-        "tabWidth": 2,
-        "comments": 80,
-        "ignoreComments": false,
-        "ignoreTrailingComments": true,
-        "ignoreUrls": true,
-        "ignoreStrings": true,
-        "ignoreTemplateLiterals": true,
-        "ignoreRegExpLiterals": true
-      }
-    ]
+    "indent": ["warn", 2],
+    "no-unused-vars": ["off", { "vars": "local" }],
+    "no-case-declarations": "off",
+    "prefer-const": "warn",
+    "quotes": ["warn", "single"],
+    "react/prop-types": "off",
+    "semi": ["warn", "always"],
+    "space-infix-ops": "warn"
+  },
+  "settings": {
+    "react": { "version": "detect"}
   }
-}
+} 
