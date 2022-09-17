@@ -10,7 +10,7 @@ const PORT = 3000;
 // CORS if needed
 // const cors = require('cors');
 // app.use(cors());
-
+const app = express();
 /**
  * handle parsing request body
  */
@@ -21,7 +21,7 @@ app.use('/', express.static(path.join(__dirname, '../client')));
 
 // serve login page
 app.use('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname,'../client/index.html'))
+  res.sendFile(path.resolve(__dirname, '../client/index.html'));
 });
 
 // forward all request to API router
