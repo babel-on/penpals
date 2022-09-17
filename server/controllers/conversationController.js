@@ -1,30 +1,65 @@
 const Conversation = require('../models/conversationModel');
+const User = require('../models/userModel');
 
 const conversationController = {};
 
-conversationController.getConversation = async (req, res, next) => {
-  const lang = res.locals.language;
-  const conversation = await Conversation.findOne({ _id: req.params.id });
-  if (!conversation)
-    return next({
-      log: null,
-      status: 400,
-      message: "That conversation doesn't exist",
+conversationController.getConversations = async (req, res, next) => {
+  // LATER, find out where this userID is being saved in prev middleware
+  try {
+    const user = await User.findOne({ _id: res.locals.userId });
+    res.locals.conversations = user.conversations.map((conversation) => {
+      return {
+        lastAuthor: conversation.messages.at(-1).author,
+        lastContent: conversation.messages.at(-1).content,
+        lastTime: conversation.messages.at(-1).createdAt,
+      };
     });
-  // This probably isn't going to work for actually iterating through the conversation
-  // will look again later
-  for (const message of conversation) {
-    if (!(lang in message.translations)) {
-      message.translations[lang] = await FetchTranslation(
-        lang,
-        message.content
-      );
-    }
+    next();
+  } catch (err) {
+    next({
+      log: 'Error occured in getConversations',
+      status: 500,
+      message: 'An error occured retriving conversation list',
+    });
   }
-  await conversation.save();
-  // save to locals and next
+};
 
-  // set up error catching
+conversationController.getConversation = async (req, res, next) => {
+  // needs checking if the user (from previous middleware function) has access to this convo
+  // will do later when the method is clearer
+  try {
+    const lang = res.locals.language;
+    const conversation = await Conversation.findOne({ _id: req.params.id });
+    if (!conversation)
+      return next({
+        log: null,
+        status: 400,
+        message: "That conversation doesn't exist",
+      });
+    for (const message of conversation.messages) {
+      if (!(lang in message.translations)) {
+        message.translations[lang] = await FetchTranslation(
+          lang,
+          message.content
+        );
+      }
+    }
+    await conversation.save();
+    res.locals.conversation = conversation.messages.map((message) => {
+      return {
+        author: message.author,
+        createdAt: message.createdAt,
+        content: message.translations[lang],
+      };
+    });
+    next();
+  } catch (err) {
+    next({
+      log: 'Error occured in getConversation',
+      status: 500,
+      message: 'An error occured retriving messages',
+    });
+  }
 };
 
 module.exports = conversationController;
