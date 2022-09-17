@@ -134,7 +134,7 @@ conversationController.addUserToConversation = async (req, res, next) => {
     next({
       log: 'Error occured in addUserToConversation',
       status: 500,
-      message: 'An error occured user to conversation',
+      message: 'An error occured adding user to conversation',
     });
   }
 };
