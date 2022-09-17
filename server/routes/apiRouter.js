@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = require('../server');
 const router = express.Router();
-// requrie controller
+// require controller
 const userController = require('../controllers/userController.js');
 
 //handle login
