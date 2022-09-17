@@ -1,8 +1,32 @@
 const Conversation = require('../models/conversationModel');
+const User = require('../models/userModel');
 
 const conversationController = {};
 
+conversationController.getConversations = async (req, res, next) => {
+  // LATER, find out where this userID is being saved in prev middleware
+  try {
+    const user = await User.findOne({ _id: res.locals.userId });
+    res.locals.conversations = user.conversations.map((conversation) => {
+      return {
+        lastAuthor: conversation.messages.at(-1).author,
+        lastContent: conversation.messages.at(-1).content,
+        lastTime: conversation.messages.at(-1).createdAt,
+      };
+    });
+    next();
+  } catch (err) {
+    next({
+      log: 'Error occured in getConversations',
+      status: 500,
+      message: 'An error occured retriving conversation list',
+    });
+  }
+};
+
 conversationController.getConversation = async (req, res, next) => {
+  // needs checking if the user (from previous middleware function) has access to this convo
+  // will do later when the method is clearer
   try {
     const lang = res.locals.language;
     const conversation = await Conversation.findOne({ _id: req.params.id });
