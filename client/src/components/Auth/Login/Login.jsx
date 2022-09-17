@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import UserContext from '../../../context/UserContext';
 import { useForm } from 'react-hook-form';
 import './Login.scss';
 import { motion } from 'framer-motion';
 
 const Login = ({ handleClick }) => {
   const { register, handleSubmit, reset } = useForm();
+
+  const [user, setUser] = useContext(UserContext);
 
   const onSubmit = (data) =>
     fetch('/api/login', {
@@ -19,6 +22,8 @@ const Login = ({ handleClick }) => {
         if (res.ok) return res.json();
         else throw new Error('Invalid username or password!');
       })
+      .then((data) => setUser(data))
+      .then(() => console.log(user))
       .then(() => reset())
       .catch((e) => console.log(e));
 

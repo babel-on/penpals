@@ -1,8 +1,5 @@
 const mongoose = require('mongoose');
 
-const salt = 10;
-const bcrypt = require('bcryptjs');
-
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   passwordHash: { type: String, required: true },
