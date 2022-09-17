@@ -4,7 +4,7 @@ import './App.scss';
 import { AnimatePresence } from 'framer-motion';
 import Landing from '../pages/Landing/Landing.jsx';
 import Auth from '../pages/Auth/Auth.jsx';
-import Container from '../pages/ChatPage/Container.jsx';
+import Container from '../pages/ChatPage/Container';
 
 const App = () => {
   return (
@@ -13,7 +13,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/auth" element={<Auth />} />
-          <Route path="/chat" component={Container} />
+          <Route path="/chat" element={<Container />} />
         </Routes>
       </AnimatePresence>
     </BrowserRouter>
