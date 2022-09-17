@@ -6,6 +6,17 @@ import { motion } from 'framer-motion';
 const Register = () => {
   const { register, handleSubmit, watch, reset } = useForm();
 
+  const onSubmit = (data) => {
+    fetch('/register', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }).then(() => reset());
+  };
+
   const animations = {
     initial: { opacity: 0, y: 0 },
     animate: { opacity: 1, y: 1 },
@@ -23,7 +34,7 @@ const Register = () => {
       <section className="register">
         <button>X</button>
         <h2>Register</h2>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-container">
             <div className="input-wrapper">
               <input
