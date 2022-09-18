@@ -126,7 +126,7 @@ conversationController.addConversation = async (req, res, next) => {
       User.findOne({ _id: res.locals.user.userId }).populate('conversations'),
       User.findOne({ _id: req.body.invitee }).populate('conversations'),
     ]);
-    if (creator.conversations && creator.conversations[req.body.invitee]) {
+    if (creator.partners && creator.partners[req.body.invitee]) {
       // check if the conversation already exists between those 2 users
       return next({
         log: null,
