@@ -53,7 +53,7 @@ userController.createUser = async (req, res, next) => {
       status: 400,
       message: 'Language required',
     });
-  if (!langCode.hasOwnProperty.call(req.body.language))
+  if (!(req.body.language in langCode))
     return next({
       log: null,
       status: 400,
