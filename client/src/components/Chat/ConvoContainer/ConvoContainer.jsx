@@ -1,20 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './ConvoContainer.scss';
 import ConvoPreview from '../ConvoPreview/ConvoPreview';
+import { useFetch } from '../../../hooks/useFetch';
 
-<<<<<<< HEAD
 const ConvoContainer = () => {
-=======
-const ConvoContainer = props => {
+  const [conversation, setConversation] = useState([]);
 
+  useEffect(() => {
+    fetch('/api/conversation')
+      .then((res) => res.json())
+      .then((data) => {
+        setConversation(
+          data.map((ele) => <ConvoPreview key={ele.id} conversation={ele} />)
+        );
+      })
+      .then(() => console.log(conversation));
+  }, []);
 
-
->>>>>>> 55d102f9c7c5d5e3f8ff69815ab10ab125f9a587
   return (
     <div className="convoContainer">
       <h1>convo container</h1>
-      <ConvoPreview />
-      <ConvoPreview />
+      {conversation}
     </div>
   );
 };
