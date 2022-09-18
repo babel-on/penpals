@@ -28,8 +28,9 @@ conversationController.getConversations = async (req, res, next) => {
         // if the most recent message hasn't been translated to the current user's language yet, here we call the API to translate it
         if (
           !(
+            conversation.messages.at(1).translations &&
             res.locals.user.language in
-            conversation.messages.at(-1).translations
+              conversation.messages.at(-1).translations
           )
         ) {
           const translation = await fetchTranslation(
