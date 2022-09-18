@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 dotenv.config();
+const cors = require('cors');
 
 // API router
 const apiRouter = require('./routes/apiRouter');
@@ -15,12 +16,19 @@ const app = express();
 const mongoURI = process.env.MONGO_URI;
 mongoose.connect(mongoURI).then(() => console.log('Connected to MongoDB'));
 
+
+
 /**
  * handle parsing request body
  */
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:3000' // URL of the react (Frontend) app
+}));
 
 app.use('/api', apiRouter);
 // app.use('/', express.static(path.join(__dirname, '../client')));
@@ -51,8 +59,35 @@ app.use((err, req, res, next) => {
   res.status(error.status).json({ error: error.message });
 });
 
-app.listen(PORT, () => {
+
+
+
+const server = app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}...`);
 });
+
+const io = require('socket.io')(3030, {
+  cors: {
+    origin: '*',
+  },
+});
+require('./socket')(io);
+
+/* 
+io.on('connection', socket => {
+  socket.on('new-user', name => {
+    users[socket.id] = name;
+    socket.broadcast.emit('user-connected', name);
+  })
+  socket.on('send-chat-message', message => {
+    socket.broadcast.emit('chat-message', {message: message, name: users[socket.id]})
+  })
+  socket.on('disconnect', () => {
+    socket.broadcast.emit('user-disconnected', users[socket.id])
+    delete users[socket.id]
+  })
+})
+ */
+
 
 module.exports = app;
