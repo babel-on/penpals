@@ -140,43 +140,22 @@ userController.changeLanguage = async (req, res, next) => {
 
 // get 10 users info
 userController.get10Users = async (req, res, next) => {
-  const currUser = req.query.user;
   try {
-    const users = await User.find({});
-    // list of all users
-    let allusers = [];
-    users.map((user) => {
-      if (user._id == currUser) {
-        console.log('FOUND and EXCLUDED');
-      } else allusers.push(user);
-    });
-    allusers = allusers.map((user) => {
-      return {
-        _id: user._id,
-        username: user.username,
-        language: langCode[user.language],  
-      };
-    });
-    const randomUsers = [];
-
-    if (allusers.length < 10) {
-      res.locals.userList = allusers;
-      return next();
-    }
-    while (randomUsers.length <= 10) {
-      const randomNum = Math.floor(Math.random() * allusers.length);
-      if (randomUsers.includes(allusers[randomNum]))
-        randomUsers.push(allusers[randomNum]);
-    }
-    res.locals.userList = randomUsers;
-    return next();
+    const user = await User.findOne({ _id: res.locals.user.userId });
+    const users = await User.aggregate([
+      { $match: { _id: { $ne: res.locals.user.userId } } },
+      {
+        $match: { _id: { $nin: user.partners.map((partner) => partner._id) } },
+      },
+      { $sample: 10 },
+    ]);
+    res.locals.users = users;
+    next();
   } catch (err) {
     return next({
-      log: 'userController.verifyUser ERROR: ' + err,
+      log: 'get10Users Error: ' + err,
       status: 500,
-      message: {
-        err: 'userController.get10Users ERROR: Error getting random 10 user',
-      },
+      message: 'Error fetching 10 users',
     });
   }
 };

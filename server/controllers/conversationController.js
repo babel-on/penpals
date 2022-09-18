@@ -138,7 +138,8 @@ conversationController.addConversation = async (req, res, next) => {
     if (!invitee.conversations) invitee.conversations = {};
     creator.conversations.set(invitee._id.toString(), conversation);
     invitee.conversations.set(creator._id.toString(), conversation);
-
+    creator.partners.push(invitee);
+    invitee.partners.push(creator);
     await Promise.all([creator.save(), invitee.save()]);
     res.locals.conversation = { id: conversation._id };
     next();
