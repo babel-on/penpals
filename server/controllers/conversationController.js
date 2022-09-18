@@ -98,6 +98,7 @@ conversationController.getConversation = async (req, res, next) => {
     }
     res.locals.conversation = conversation.messages.map((message) => {
       return {
+        id: message._id,
         author: message.author,
         createdAt: message.createdAt,
         content: message.translations[lang],
