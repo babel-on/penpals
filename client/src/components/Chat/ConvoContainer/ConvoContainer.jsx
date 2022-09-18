@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import './ConvoContainer.scss';
 import ConvoPreview from '../ConvoPreview/ConvoPreview';
-import RandomConvo from '../RandomConvo/RandomConvoContainer';
 import { useFetch } from '../../../hooks/useFetch';
 import UserContext from '../../../context/UserContext';
 
@@ -19,9 +18,8 @@ const ConvoContainer = () => {
 
   return (
     <div className="convoContainer">
-      <h1>Messages</h1>
+      <h2>Messages</h2>
       {conversation}
-      <RandomConvo />
     </div>
   );
 };
