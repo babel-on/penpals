@@ -47,13 +47,27 @@ conversationController.getConversations = async (req, res, next) => {
           ),
         });
       else {
+        if (
+          !(
+            res.locals.user.language in
+            conversation.messages.at(-1).translations
+          )
+        ) {
+          conversation.messages[conversation.messages.length - 1].translations[
+            res.locals.user.language
+          ] = await fetchTranslation(
+            res.locals.user.language,
+            conversation.messages.at(-1).content
+          );
+        }
         conversations.push({
           id: conversation._id,
           partner: conversation.usernames.find(
             (name) => name !== user.username
           ),
           lastAuthor: conversation.messages.at(-1).author,
-          lastContent: conversation.messages.at(-1).content,
+          lastContent:
+            conversation.messages.at(-1).translations[res.locals.user.language],
           lastTime: conversation.messages.at(-1).createdAt,
           messageCount: conversation.messageCount,
         });
