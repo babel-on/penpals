@@ -20,7 +20,7 @@ const Login = ({ handleClick }) => {
       body: JSON.stringify(data),
     })
       .then((res) => {
-        if (res.ok) return navigate('/chat');
+        if (res.ok) return res.json();
         else throw new Error('Invalid username or password!');
       })
       .then((data) => handleUser(data))
