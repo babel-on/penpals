@@ -6,6 +6,14 @@ import UserContext from '../../context/UserContext';
 import './Container.scss';
 
 class Container extends React.Component {
+  // // individual conversations
+  // const [conversation, setConversation] = useState({});
+  // // get individual conversation from db 
+  // const handleConvo = async () => {
+  //   // submit get request to get specific convos
+  //   const convo = await fetch();
+  //   setConversation();
+  // };
   constructor(props) {
     super(props);
     this.state = {};
