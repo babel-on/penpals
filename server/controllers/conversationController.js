@@ -15,13 +15,15 @@ conversationController.getConversations = async (req, res, next) => {
     // unfortunately, since this is a map instead of an object, we have to build the results ourselves
     // instead of using .map like civilized people...
     for (const conversation of user.conversations.values()) {
+      await conversation.populate('users');
+      console.log(conversation);
+      const partner = conversation.users.find((usr) => usr._id !== user._id);
       if (conversation.messageCount === 0)
         conversations.push({
           id: conversation._id,
           messageCount: 0,
-          partner: conversation.usernames.find(
-            (name) => name !== user.username
-          ),
+          partner: partner.username,
+          partnerLanguage: partner.language,
         });
       else {
         // if the most recent message hasn't been translated to the current user's language yet, here we call the API to translate it
@@ -43,9 +45,8 @@ conversationController.getConversations = async (req, res, next) => {
         }
         conversations.push({
           id: conversation._id,
-          partner: conversation.usernames.find(
-            (name) => name !== user.username
-          ),
+          partner: partner.username,
+          partnerLanguage: partner.language,
           lastAuthor: conversation.messages.at(-1).author,
           lastContent:
             conversation.messages.at(-1).translations[res.locals.user.language],
