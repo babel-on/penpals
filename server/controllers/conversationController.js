@@ -205,6 +205,12 @@ conversationController.deleteMessageFromConversation = async (
   const messageIdx = conversation.messages.findIndex(
     (mes) => mes._id.toString() === req.body.messageId
   );
+  if (messageIdx === -1)
+    return next({
+      log: null,
+      status: 400,
+      message: 'Invalid messageId to delete',
+    });
   console.log(messageIdx);
   if (conversation.messages[messageIdx].author !== res.locals.user.username)
     return next({
