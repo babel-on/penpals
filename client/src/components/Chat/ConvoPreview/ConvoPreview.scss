@@ -1,0 +1,38 @@
+.convoPreview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  border-bottom: 1.5px solid #f1f5f8;
+  margin: 0 auto;
+  gap: 1rem;
+  padding: 2rem 0;
+
+  &:hover {
+    background-color: #f1f5f8;
+  }
+
+  .convoHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .convoContent {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+    justify-content: center;
+    gap: 1rem;
+    .convoInformation {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+
+      .partner {
+        font-weight: 800;
+      }
+    }
+  }
+}
