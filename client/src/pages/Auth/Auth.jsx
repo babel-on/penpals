@@ -27,7 +27,9 @@ const Auth = () => {
             <div className="auth-design">
               <div className="auth-text">
                 <h2>Penpals</h2>
-                <p>Babel on without fear of a language barrier.</p>
+                <p>
+                  <i>Babel on without fear of a language barrier.</i>
+                </p>
               </div>
               <img src="/chatting.png" alt="" />
             </div>
@@ -38,6 +40,12 @@ const Auth = () => {
             )}
           </div>
         </section>
+        <p>
+          &#169; 2022{' '}
+          <span>
+            Jigar Patel, Michael Sarkisian, Adrian Reczek, and James Chan
+          </span>
+        </p>
       </motion.div>
     </main>
   );

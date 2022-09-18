@@ -4,37 +4,14 @@ const fetchTranslation = require('../utls/fetchTranslation');
 
 const conversationController = {};
 
+// these all require a logged in user, and must be called after jwtController.verify
 conversationController.getConversations = async (req, res, next) => {
+  // gets a truncated list of all of the logged in user's conversations
   try {
     const user = await User.findOne({ _id: res.locals.user.userId }).populate(
       'conversations'
     );
     const conversations = [];
-    // res.locals.conversations = user.conversations
-    //   .values()
-    //   .map((conversation) => {
-    //     console.log(conversation);
-    //     if (conversation.messageCount === 0)
-    //       return {
-    //         id: conversation._id,
-    //         messageCount: 0,
-    //         partner: conversation.usernames.find(
-    //           (name) => name !== user.username
-    //         ),
-    //       };
-    //     // we're returning the username that doesn't belong to the current user here
-    //     // this will work fine for 2-person convos but would need to be refactored if 3+ convos are implemented
-    //     else
-    //       return {
-    //         id: conversation._id,
-    //         partner: conversation.users.find((name) => name !== user.username),
-    //         lastAuthor: conversation.messages.at(-1).author,
-    //         lastContent: conversation.messages.at(-1).content,
-    //         lastTime: conversation.messages.at(-1).createdAt,
-    //         messageCount: conversation.messageCount,
-    //       };
-    //   });
-
     // unfortunately, since this is a map instead of an object, we have to build the results ourselves
     // instead of using .map like civilized people...
     for (const conversation of user.conversations.values()) {
@@ -47,13 +24,31 @@ conversationController.getConversations = async (req, res, next) => {
           ),
         });
       else {
+        // if the most recent message hasn't been translated to the current user's language yet, here we call the API to translate it
+        if (
+          !(
+            res.locals.user.language in
+            conversation.messages.at(-1).translations
+          )
+        ) {
+          const translation = await fetchTranslation(
+            res.locals.user.language,
+            conversation.messages.at(-1).content
+          );
+          conversation.messages[conversation.messages.length - 1].translations[
+            res.locals.user.language
+          ] = translation.text;
+          conversation.markModified('messages');
+          await conversation.save();
+        }
         conversations.push({
           id: conversation._id,
           partner: conversation.usernames.find(
             (name) => name !== user.username
           ),
           lastAuthor: conversation.messages.at(-1).author,
-          lastContent: conversation.messages.at(-1).content,
+          lastContent:
+            conversation.messages.at(-1).translations[res.locals.user.language],
           lastTime: conversation.messages.at(-1).createdAt,
           messageCount: conversation.messageCount,
         });
@@ -71,6 +66,9 @@ conversationController.getConversations = async (req, res, next) => {
 };
 
 conversationController.getConversation = async (req, res, next) => {
+  // gets all of the messages of a single conversation
+  // this function will call fetchTranslation as needed to generate translations as needed
+  // these translations are saved to avoid unnecessary API calls
   try {
     const lang = res.locals.user.language;
     const conversation = await Conversation.findOne({ _id: req.params.id });
@@ -116,6 +114,7 @@ conversationController.getConversation = async (req, res, next) => {
 };
 
 conversationController.addConversation = async (req, res, next) => {
+  // creates a new conversation between the logged-in user and the user specified in the request body
   try {
     // verify user jwt before this
     const [creator, invitee] = await Promise.all([
@@ -153,6 +152,7 @@ conversationController.addConversation = async (req, res, next) => {
 };
 
 conversationController.addMessageToConversation = async (req, res, next) => {
+  // adds a message to a conversation
   try {
     const conversation = await Conversation.findOne({ _id: req.params.id });
     if (!conversation.usernames.includes(res.locals.user.username)) {
@@ -166,6 +166,7 @@ conversationController.addMessageToConversation = async (req, res, next) => {
     const message = {
       author: res.locals.user.username,
       content: req.body.content,
+      // we also add the message as-is as a valid translation for the user's current language
       translations: {
         [res.locals.user.language]: req.body.content,
       },
@@ -182,6 +183,96 @@ conversationController.addMessageToConversation = async (req, res, next) => {
       message: 'An error occured adding a message',
     });
   }
+};
+
+conversationController.deleteMessageFromConversation = async (
+  // deletes a single message based on the messageId provided in the request body
+  // messages can only be deleted by the user who created them
+  req,
+  res,
+  next
+) => {
+  if (!req.body.messageId)
+    return next({
+      log: null,
+      status: 400,
+      message: 'MessageId to delete not specified',
+    });
+  const conversation = await Conversation.findOne({ _id: req.params.id });
+  if (!conversation)
+    return next({
+      log: null,
+      status: 400,
+      message: 'That conversation does not exist.',
+    });
+  const messageIdx = conversation.messages.findIndex(
+    (mes) => mes._id.toString() === req.body.messageId
+  );
+  if (messageIdx === -1)
+    return next({
+      log: null,
+      status: 400,
+      message: 'Invalid messageId to delete',
+    });
+  if (conversation.messages[messageIdx].author !== res.locals.user.username)
+    return next({
+      log: null,
+      status: 403,
+      message: 'You can only delete your own messages',
+    });
+  conversation.messages = [
+    ...conversation.messages.slice(0, messageIdx),
+    ...conversation.messages.slice(messageIdx + 1),
+  ];
+  conversation.markModified('messages');
+  conversation.messageCount--;
+  await conversation.save();
+  next();
+};
+
+conversationController.editMessageInConversation = async (req, res, next) => {
+  if (!req.body.content)
+    return next({
+      log: null,
+      status: 400,
+      message: 'New message content not provided',
+    });
+  if (!req.body.messageId)
+    return next({
+      log: null,
+      status: 400,
+      message: 'MessageId to edit not specified',
+    });
+  const conversation = await Conversation.findOne({ _id: req.params.id });
+  if (!conversation)
+    return next({
+      log: null,
+      status: 400,
+      message: 'That conversation does not exist.',
+    });
+  const messageIdx = conversation.messages.findIndex(
+    (mes) => mes._id.toString() === req.body.messageId
+  );
+  if (messageIdx === -1)
+    return next({
+      log: null,
+      status: 400,
+      message: 'Invalid messageId to edit',
+    });
+  if (conversation.messages[messageIdx].author !== res.locals.user.username)
+    return next({
+      log: null,
+      status: 403,
+      message: 'You can only edit your own messages',
+    });
+  conversation.messages[messageIdx].content = req.body.content;
+  conversation.messages[messageIdx].translations = {
+    [res.locals.user.language]: req.body.content,
+  };
+  conversation.markModified('messages');
+  res.locals.message = conversation.messages[messageIdx];
+  await conversation.save();
+  next();
 };
 
 // Conversations are currently between 2 users, with the other added on creation

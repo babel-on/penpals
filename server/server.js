@@ -33,7 +33,6 @@ app.use(cors({
 app.use('/api', apiRouter);
 // app.use('/', express.static(path.join(__dirname, '../client')));
 
-app.use('/conversation', convoRouter);
 // serve login page
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/index.html'));

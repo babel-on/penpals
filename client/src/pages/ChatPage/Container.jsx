@@ -3,6 +3,7 @@ import Navbar from '../../components/Chat/Navbar/Navbar.jsx';
 import ChatContainer from '../../components/Chat/ChatContainer/ChatContainer.jsx';
 import ConvoContainer from '../../components/Chat/ConvoContainer/ConvoContainer.jsx';
 import UserContext from '../../context/UserContext';
+import './Container.scss';
 
 import io from 'socket.io-client';
 

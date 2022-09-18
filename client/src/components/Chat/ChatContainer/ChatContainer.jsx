@@ -3,9 +3,9 @@ import './ChatContainer.scss';
 import MessageBox from '../MessageBox/MessageBox';
 import MessageCreator from '../MessageCreator/MessageCreator';
 
-const ChatContainer = props => {
+const ChatContainer = () => {
   return (
-    <div className='chatContainer'>
+    <div className="chatContainer">
       <h1>ChatContainer</h1>
       <MessageBox />
       <MessageCreator />
