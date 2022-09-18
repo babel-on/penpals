@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import './ConvoContainer.scss';
 import ConvoPreview from '../ConvoPreview/ConvoPreview';
-import { useFetch } from '../../../hooks/useFetch';
 import UserContext from '../../../context/UserContext';
 
 const ConvoContainer = () => {

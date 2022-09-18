@@ -13,7 +13,7 @@ const Register = ({ handleClick }) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ ...data, language: 'EN-US' }),
+      body: JSON.stringify({ ...data }),
     }).then(() => reset());
   };
 
