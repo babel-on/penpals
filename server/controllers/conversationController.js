@@ -9,29 +9,57 @@ conversationController.getConversations = async (req, res, next) => {
     const user = await User.findOne({ _id: res.locals.user.userId }).populate(
       'conversations'
     );
-    res.locals.conversations = Object.values(user.conversations).map(
-      (conversation) => {
-        if (conversation.messages.length === 0)
-          return {
-            id: conversation._id,
-            messageCount: 0,
-            partner: conversation.usernames.find(
-              (name) => name !== user.username
-            ),
-          };
-        // we're returning the username that doesn't belong to the current user here
-        // this will work fine for 2-person convos but would need to be refactored if 3+ convos are implemented
-        else
-          return {
-            id: conversation._id,
-            partner: conversation.users.find((name) => name !== user.username),
-            lastAuthor: conversation.messages.at(-1).author,
-            lastContent: conversation.messages.at(-1).content,
-            lastTime: conversation.messages.at(-1).createdAt,
-            messageCount: conversation.messages.length,
-          };
+    const conversations = [];
+    // res.locals.conversations = user.conversations
+    //   .values()
+    //   .map((conversation) => {
+    //     console.log(conversation);
+    //     if (conversation.messageCount === 0)
+    //       return {
+    //         id: conversation._id,
+    //         messageCount: 0,
+    //         partner: conversation.usernames.find(
+    //           (name) => name !== user.username
+    //         ),
+    //       };
+    //     // we're returning the username that doesn't belong to the current user here
+    //     // this will work fine for 2-person convos but would need to be refactored if 3+ convos are implemented
+    //     else
+    //       return {
+    //         id: conversation._id,
+    //         partner: conversation.users.find((name) => name !== user.username),
+    //         lastAuthor: conversation.messages.at(-1).author,
+    //         lastContent: conversation.messages.at(-1).content,
+    //         lastTime: conversation.messages.at(-1).createdAt,
+    //         messageCount: conversation.messageCount,
+    //       };
+    //   });
+
+    // unfortunately, since this is a map instead of an object, we have to build the results ourselves
+    // instead of using .map like civilized people...
+    for (const conversation of user.conversations.values()) {
+      if (conversation.messageCount === 0)
+        conversations.push({
+          id: conversation._id,
+          messageCount: 0,
+          partner: conversation.usernames.find(
+            (name) => name !== user.username
+          ),
+        });
+      else {
+        conversations.push({
+          id: conversation._id,
+          partner: conversation.usernames.find(
+            (name) => name !== user.username
+          ),
+          lastAuthor: conversation.messages.at(-1).author,
+          lastContent: conversation.messages.at(-1).content,
+          lastTime: conversation.messages.at(-1).createdAt,
+          messageCount: conversation.messageCount,
+        });
       }
-    );
+    }
+    res.locals.conversations = conversations;
     next();
   } catch (err) {
     next({
@@ -108,8 +136,8 @@ conversationController.addConversation = async (req, res, next) => {
     });
     if (!creator.conversations) creator.conversations = {};
     if (!invitee.conversations) invitee.conversations = {};
-    creator.conversations[invitee._id.toString()] = conversation;
-    invitee.conversations[creator._id.toString()] = conversation;
+    creator.conversations.set(invitee._id.toString(), conversation);
+    invitee.conversations.set(creator._id.toString(), conversation);
 
     await Promise.all([creator.save(), invitee.save()]);
     res.locals.conversation = { id: conversation._id };
@@ -125,20 +153,6 @@ conversationController.addConversation = async (req, res, next) => {
 
 conversationController.addMessageToConversation = async (req, res, next) => {
   try {
-    // verify user jwt before this
-    // const user = await User.findOne({ _id: res.locals.user.userId }).populate(
-    //   'conversations'
-    // );
-    // const conversation = user.conversations.find(
-    //   (convo) => convo._id.toString() === req.params.id
-    // );
-    // if (!conversation)
-    //   return next({
-    //     log: null,
-    //     status: 404,
-    //     message:
-    //       'Cannot find conversation. Conversations are only available to users in them',
-    //   });
     const conversation = await Conversation.findOne({ _id: req.params.id });
     if (!conversation.usernames.includes(res.locals.user.username)) {
       return next({
@@ -157,7 +171,7 @@ conversationController.addMessageToConversation = async (req, res, next) => {
     };
     conversation.messages.push(message);
     res.locals.message = message;
-    // Promise.all([user.save(), conversation.save()]);
+    conversation.messageCount++;
     await conversation.save();
     next();
   } catch (err) {
