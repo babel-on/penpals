@@ -15,9 +15,22 @@ export function UserProvider({ children }) {
     setConversation(arr);
   };
 
+  const [currentConversation, setCurrentConversation] = useState(null);
+
+  const handleCurrentConversation = (id) => {
+    setCurrentConversation(id);
+  };
+
   return (
     <UserContext.Provider
-      value={{ user, handleUser, conversation, handleConversation }}
+      value={{
+        user,
+        handleUser,
+        conversation,
+        handleConversation,
+        currentConversation,
+        handleCurrentConversation,
+      }}
     >
       {children}
     </UserContext.Provider>
