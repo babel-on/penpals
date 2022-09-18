@@ -4,13 +4,11 @@ const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState({});
-
   const handleUser = (user) => {
     setUser(user);
   };
 
   const [conversation, setConversation] = useState([]);
-
   const handleConversation = (arr) => {
     setConversation(arr);
   };
@@ -18,8 +16,9 @@ export function UserProvider({ children }) {
   const [randomList, setRandomList] = useState([]);
   const handleRandomList = (arr) => {
     setRandomList(arr);
-  const [currentConversation, setCurrentConversation] = useState(null);
+  };
 
+  const [currentConversation, setCurrentConversation] = useState(null);
   const handleCurrentConversation = (id) => {
     setCurrentConversation(id);
   };
@@ -33,7 +32,8 @@ export function UserProvider({ children }) {
         handleConversation,
         currentConversation,
         handleCurrentConversation,
-        randomList, handleRandomList
+        randomList,
+        handleRandomList,
       }}
     >
       {children}
