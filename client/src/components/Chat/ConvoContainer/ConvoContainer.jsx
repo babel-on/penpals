@@ -2,12 +2,9 @@ import React, { useEffect, useState } from 'react';
 import './ConvoContainer.scss';
 import ConvoPreview from '../ConvoPreview/ConvoPreview';
 import { useFetch } from '../../../hooks/useFetch';
-import { useContext } from 'react';
-import UserContext from '../../../context/UserContext.jsx';
 
 const ConvoContainer = () => {
   const [conversation, setConversation] = useState([]);
-
   useEffect(() => {
     fetch('/api/conversation')
       .then((res) => res.json())
