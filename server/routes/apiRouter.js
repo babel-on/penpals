@@ -25,10 +25,14 @@ router.post(
   }
 );
 
-router.get('/getusers', userController.get10Users, (req, res) => {
-  console.log('GOT IT');
-  res.status(200).json(res.locals.userList);
-});
+router.get(
+  '/getusers',
+  jwtController.verify,
+  userController.get10Users,
+  (req, res) => {
+    res.status(200).json(res.locals.userList);
+  }
+);
 
 router.put(
   '/language',

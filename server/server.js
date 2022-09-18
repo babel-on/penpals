@@ -31,8 +31,8 @@ app.get('/', (req, res) => {
 });
 
 // forward all request to API router
-const cors = require('cors');
-app.use(cors());
+// const cors = require('cors');
+// app.use(cors());
 // catch all unknown routes
 app.use('*', (req, res) => {
   res.status(404).json('CANNOT FIND PAGE');
