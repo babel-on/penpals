@@ -184,6 +184,44 @@ conversationController.addMessageToConversation = async (req, res, next) => {
   }
 };
 
+conversationController.deleteMessageFromConversation = async (
+  req,
+  res,
+  next
+) => {
+  if (!req.body.messageId)
+    return next({
+      log: null,
+      status: 400,
+      message: 'MessageId to delete not specified',
+    });
+  const conversation = await Conversation.findOne({ _id: req.params.id });
+  if (!conversation)
+    return next({
+      log: null,
+      status: 400,
+      message: 'That conversation does not exist.',
+    });
+  const messageIdx = conversation.messages.findIndex(
+    (mes) => mes._id.toString() === req.body.messageId
+  );
+  console.log(messageIdx);
+  if (conversation.messages[messageIdx].author !== res.locals.user.username)
+    return next({
+      log: null,
+      status: 403,
+      message: 'You can only delete your own messages',
+    });
+  conversation.messages = [
+    ...conversation.messages.slice(0, messageIdx),
+    ...conversation.messages.slice(messageIdx + 1),
+  ];
+  conversation.markModified('messages');
+  conversation.messageCount--;
+  await conversation.save();
+  next();
+};
+
 // Conversations are currently between 2 users, with the other added on creation
 // this may be of use if/when conversations are able to be expanded to more people
 
