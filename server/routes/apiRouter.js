@@ -25,4 +25,11 @@ router.post(
   }
 );
 
+router.get('/getusers', userController.get10Users, (req,res) => {
+  res.status(200).json(res.locals.userList);
+});
+
+
 module.exports = router;
+
+// get all users that have not made convos to

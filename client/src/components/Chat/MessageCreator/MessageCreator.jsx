@@ -5,6 +5,8 @@ const MessageCreator = props => {
   return (
     <form className='messageCreator'>
       <input type='text'></input>
+      {/* onchange for input field-> on change {(newValue) => setNewMessage(newValue.target.value)}? */}
+
       <button type='submit'>Send</button>
     </form>
   );

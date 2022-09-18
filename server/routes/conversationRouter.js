@@ -21,4 +21,22 @@ router.post(
   }
 );
 
+router.get(
+  '/:id',
+  jwtController.verify,
+  conversationController.getConversation,
+  (req, res) => {
+    res.status(200).json(res.locals.conversation);
+  }
+);
+
+router.post(
+  '/:id',
+  jwtController.verify,
+  conversationController.addMessageToConversation,
+  (req, res) => {
+    res.status(200).json(res.locals.message);
+  }
+);
+
 module.exports = router;

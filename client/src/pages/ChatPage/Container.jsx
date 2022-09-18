@@ -1,14 +1,12 @@
 import React from 'react';
-
-import Navbar from '../../components/Chat/Navbar';
-
-import ChatContainer from '../../components/Chat/ChatContainer';
-
-import ConvoContainer from '../../components/Chat/ConvoContainer';
+import Navbar from '../../components/Chat/Navbar/Navbar.jsx';
+import ChatContainer from '../../components/Chat/ChatContainer/ChatContainer.jsx';
+import ConvoContainer from '../../components/Chat/ConvoContainer/ConvoContainer.jsx';
+import UserContext from '../../context/UserContext';
 
 class Container extends React.Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
 
     };
