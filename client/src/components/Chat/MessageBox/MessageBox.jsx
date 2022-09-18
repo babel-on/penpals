@@ -12,15 +12,19 @@ const MessageBox = () => {
     fetch(`/api/conversation/${currentConversation}`)
       .then((res) => res.json())
       .then((data) => {
-        for (const message of data){
+        console.log(data);
+      });
+  });
+
+  /*
+          for (const message of data){
           if (message.author === user){
             messages.push(<OutgoingMessages message={message.content} />);
           } else if (message.author !== user){
             messages.push(<IncomingMessages message={message.content} />);
           }
         }
-      });
-  });
+  */
 
   return (
     <div className="messageBox">
