@@ -11,8 +11,6 @@ export function UserProvider({ children }) {
     setUser(user);
   };
 
-
-
   // get random userlist
   const [userList, setUserList] = useState([]); 
 
@@ -42,17 +40,6 @@ export function UserProvider({ children }) {
       console.log('ERROR IN getting convoList', err); 
     }
   };
-
-  // individual conversations
-  const [conversation, setConversation] = useState({});
-  // get individual conversation from db 
-  const handleConvo = async () => {
-    // submit get request to get specific convos
-    const convo = await fetch();
-    setConversation();
-  };
-  // to store new user input message in state
-  const [newMessage, setNewMessage] = useState(''); 
 
   return <UserContext.Provider value={{user, handleUser}}>{children}</UserContext.Provider>;
 }

@@ -1,6 +1,9 @@
 import React from 'react';
 
 const MessageCreator = props => {
+  // // to store new user input message in state
+  // const [newMessage, setNewMessage] = useState(''); 
+
   //needs event handler onclick for button to submit form message to route
   return (
     <form className='messageCreator'>
