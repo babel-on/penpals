@@ -39,4 +39,13 @@ router.post(
   }
 );
 
+router.delete(
+  '/:id',
+  jwtController.verify,
+  conversationController.deleteMessageFromConversation,
+  (req, res) => {
+    res.sendStatus(204);
+  }
+);
+
 module.exports = router;
