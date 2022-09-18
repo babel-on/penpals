@@ -39,6 +39,15 @@ router.post(
   }
 );
 
+router.put(
+  '/:id',
+  jwtController.verify,
+  conversationController.editMessageInConversation,
+  (req, res) => {
+    res.status(200).json(res.locals.message);
+  }
+);
+
 router.delete(
   '/:id',
   jwtController.verify,
