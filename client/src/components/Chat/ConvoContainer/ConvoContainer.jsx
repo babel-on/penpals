@@ -1,19 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './ConvoContainer.scss';
 import ConvoPreview from '../ConvoPreview/ConvoPreview';
+<<<<<<< HEAD
 <<<<<<< HEAD
 import RandomConvo from '../RandomConvo/RandomConvoContainer';
 import { useFetch } from '../../../hooks/useFetch';
 =======
 >>>>>>> jigar
+=======
+import UserContext from '../../../context/UserContext';
+>>>>>>> jigar
 
 const ConvoContainer = () => {
-  const [conversation, setConversation] = useState([]);
+  const { conversation, handleConversation } = useContext(UserContext);
   useEffect(() => {
     fetch('/api/conversation')
       .then((res) => res.json())
       .then((data) => {
-        setConversation(
+        handleConversation(
           data.map((ele) => <ConvoPreview key={ele.id} conversation={ele} />)
         );
       });
