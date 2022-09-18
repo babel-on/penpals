@@ -3,26 +3,23 @@ import Navbar from '../../components/Chat/Navbar/Navbar.jsx';
 import ChatContainer from '../../components/Chat/ChatContainer/ChatContainer.jsx';
 import ConvoContainer from '../../components/Chat/ConvoContainer/ConvoContainer.jsx';
 import UserContext from '../../context/UserContext';
+import './Container.scss';
 
 class Container extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state = {
-
-    };
+    this.state = {};
   }
 
-  render(){
-
+  render() {
     return (
-      <div className='container'>
+      <div className="container">
         <Navbar />
         <ChatContainer />
         <ConvoContainer />
       </div>
     );
   }
-
 }
 
 export default Container;

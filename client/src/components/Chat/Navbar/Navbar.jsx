@@ -1,12 +1,10 @@
 import React from 'react';
-import './Navbar.scss'
+import './Navbar.scss';
 
 const Navbar = () => {
   return (
-    <nav>
-      <ul>
-        <li>Navbar</li>
-      </ul>
+    <nav className="navBar">
+      <h1>Penpals from Babel-On</h1>
     </nav>
   );
 };
