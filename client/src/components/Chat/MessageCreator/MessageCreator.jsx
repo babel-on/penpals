@@ -1,6 +1,9 @@
-import React from 'react';
+import React, {useContext, useState, useEffect} from 'react';
+import UserContext from '../../../context/UserContext';
 
 const MessageCreator = () => {
+
+  const {conversation} = useContext(UserContext);
   // const [newMessage, setNewMessage] = useState('');
 
   //state needed: current conversation id, current users

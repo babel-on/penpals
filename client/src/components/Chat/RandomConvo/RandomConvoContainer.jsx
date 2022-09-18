@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import RandomUser from './RandomUser/RandomUser';
+import UserContext from '../../../context/UserContext';
 
 const RandomConvo = () => {
-  const [randomList, setRandomList] = useState([]);
+  const {randomList, handleRandomList} = useContext(UserContext);
 
   useEffect(() => {    
     fetch('/api/getusers')
       .then((res) => res.json())
       .then((data) => {
-        setRandomList(
+        handleRandomList(
           data.map((el) => <RandomUser key={el._id} user={el} />)
         );
       })
