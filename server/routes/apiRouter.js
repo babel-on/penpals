@@ -30,7 +30,7 @@ router.get(
   jwtController.verify,
   userController.get10Users,
   (req, res) => {
-    res.status(200).json(res.locals.userList);
+    res.status(200).json(res.locals.users);
   }
 );
 

@@ -10,7 +10,7 @@ const MessageBox = () => {
   const {currentConversation, handleCurrentConversation} = useContext(UserContext);
 
   useEffect(() => {
-    fetch('/api/conversation/63276a7388d0553ad5c2189f')
+    fetch('/api/conversation/')
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
