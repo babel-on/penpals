@@ -144,12 +144,18 @@ userController.get10Users = async (req, res, next) => {
   try {
     const users = await User.find({});
     // list of all users
-    const allusers = [];
-    console.log(users);
+    let allusers = [];
     users.map((user) => {
       if (user._id == currUser) {
         console.log('FOUND and EXCLUDED');
       } else allusers.push(user);
+    });
+    allusers = allusers.map((user) => {
+      return {
+        _id: user._id,
+        username: user.username,
+        language: langCode[user.language],  
+      };
     });
     const randomUsers = [];
 
