@@ -70,7 +70,7 @@ userController.createUser = async (req, res, next) => {
     });
     res.locals.user = {
       username: user.username,
-      userId: user._id,
+      _id: user._id,
       language: user.language,
     };
     next();
@@ -115,6 +115,24 @@ userController.verifyUser = async (req, res, next) => {
       message: { err: 'userController.verifyUser ERROR: Error verifying user' },
     });
   }
+};
+
+userController.changeLanguage = async (req, res, next) => {
+  if (!req.body.language || !(req.body.language in langCode)) {
+    return next({
+      log: null,
+      status: 400,
+      message: 'Invalid language',
+    });
+  }
+  const user = await User.findOneAndUpdate(
+    { _id: res.locals.user.userId },
+    { language: req.body.language },
+    { new: true }
+  );
+  res.locals.user = user;
+  // delete res.locals.user.passwordHash;
+  next();
 };
 
 // get 10 users info

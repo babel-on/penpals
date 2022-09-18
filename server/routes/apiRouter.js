@@ -25,10 +25,18 @@ router.post(
   }
 );
 
-router.get('/getusers', userController.get10Users, (req,res) => {
+router.get('/getusers', userController.get10Users, (req, res) => {
   res.status(200).json(res.locals.userList);
 });
 
+router.put(
+  '/language',
+  jwtController.verify,
+  userController.changeLanguage,
+  (req, res) => {
+    res.status(200).json(res.locals.user);
+  }
+);
 
 module.exports = router;
 
