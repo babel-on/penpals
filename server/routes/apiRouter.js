@@ -33,6 +33,7 @@ router.put(
   '/language',
   jwtController.verify,
   userController.changeLanguage,
+  jwtController.write,
   (req, res) => {
     res.status(200).json(res.locals.user);
   }
