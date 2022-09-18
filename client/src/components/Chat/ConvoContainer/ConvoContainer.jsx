@@ -2,10 +2,9 @@ import React from 'react';
 import './ConvoContainer.scss';
 import ConvoPreview from '../ConvoPreview/ConvoPreview';
 
-const ConvoContainer = props => {
-
+const ConvoContainer = () => {
   return (
-    <div className='convoContainer'>
+    <div className="convoContainer">
       <h1>convo container</h1>
       <ConvoPreview />
       <ConvoPreview />

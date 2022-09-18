@@ -31,7 +31,7 @@ const Auth = () => {
                   <i>Babel on without fear of a language barrier.</i>
                 </p>
               </div>
-              <img src="/test.png" alt="" />
+              <img src="/chatting.png" alt="" />
             </div>
             {isRegister ? (
               <Register handleClick={() => setIsRegister(false)} />
