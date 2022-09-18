@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import UserContext from '../../../context/UserContext';
 import './ConvoPreview.scss';
 
 const ConvoPreview = ({ conversation }) => {
@@ -7,8 +8,15 @@ const ConvoPreview = ({ conversation }) => {
     hour: '2-digit',
     minute: '2-digit',
   });
+  const { handleCurrentConversation } = useContext(UserContext);
+
   return (
-    <div className="convoPreview">
+    <div
+      className="convoPreview"
+      onClick={() => {
+        handleCurrentConversation(conversation.id);
+      }}
+    >
       <div className="convoHeader">
         <p>{conversation.partnerLanguage}</p>
         <img

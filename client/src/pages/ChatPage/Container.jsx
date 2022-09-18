@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import Navbar from '../../components/Chat/Navbar/Navbar.jsx';
 import ChatContainer from '../../components/Chat/ChatContainer/ChatContainer.jsx';
 import ConvoContainer from '../../components/Chat/ConvoContainer/ConvoContainer.jsx';
+import RandomConvo from '../../components/Chat/RandomConvo/RandomConvoContainer.jsx';
 import UserContext from '../../context/UserContext';
 import './Container.scss';
 
@@ -19,6 +20,7 @@ const Container = () => {
       <Navbar />
       <ChatContainer />
       <ConvoContainer />
+      <RandomConvo />
     </div>
   );
 };
