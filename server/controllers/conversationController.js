@@ -28,7 +28,7 @@ conversationController.getConversations = async (req, res, next) => {
         // if the most recent message hasn't been translated to the current user's language yet, here we call the API to translate it
         if (
           !(
-            conversation.messages.at(1).translations &&
+            conversation.messages.at(-1).translations &&
             res.locals.user.language in
               conversation.messages.at(-1).translations
           )
@@ -37,6 +37,10 @@ conversationController.getConversations = async (req, res, next) => {
             res.locals.user.language,
             conversation.messages.at(-1).content
           );
+          if (!conversation.messages.at(-1).translations)
+            conversation.messages[
+              conversation.messages.length - 1
+            ].translations = {};
           conversation.messages[conversation.messages.length - 1].translations[
             res.locals.user.language
           ] = translation.text;
