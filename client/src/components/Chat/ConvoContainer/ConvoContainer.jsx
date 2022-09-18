@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './ConvoContainer.scss';
 import ConvoPreview from '../ConvoPreview/ConvoPreview';
+<<<<<<< HEAD
 import RandomConvo from '../RandomConvo/RandomConvoContainer';
 import { useFetch } from '../../../hooks/useFetch';
+=======
+>>>>>>> jigar
 
 const ConvoContainer = () => {
   const [conversation, setConversation] = useState([]);
@@ -18,7 +21,7 @@ const ConvoContainer = () => {
 
   return (
     <div className="convoContainer">
-      <h1>convo container</h1>
+      <h1>Messages</h1>
       {conversation}
       <RandomConvo /> 
     </div>
