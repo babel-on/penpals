@@ -148,7 +148,9 @@ userController.get10Users = async (req, res, next) => {
         $match: { _id: { $nin: user.partners.map((partner) => partner._id) } },
       },
     ]).sample(10);
-    res.locals.users = users;
+    res.locals.users = users.map((u) => {
+      return { userId: u._id, username: u.username, language: u.language };
+    });
     next();
   } catch (err) {
     return next({
