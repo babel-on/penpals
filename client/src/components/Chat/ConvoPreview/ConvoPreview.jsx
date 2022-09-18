@@ -9,14 +9,20 @@ const ConvoPreview = ({ conversation }) => {
   });
   return (
     <div className="convoPreview">
-      <img
-        src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
-        height="50px"
-      ></img>
-      <p>{conversation.partner}</p>
-      <p>{conversation.partnerLanguage}</p>
-      <p>{conversation.lastContent}</p>
-      <p>{displayTime}</p>
+      <div className="convoHeader">
+        <p>{conversation.partnerLanguage}</p>
+        <img
+          src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
+          height="50px"
+        ></img>
+      </div>
+      <div className="convoContent">
+        <div className="convoInformation">
+          <p className="partner">{conversation.partner}</p>
+          <p>{displayTime}</p>
+        </div>
+        <p>{conversation.lastContent}</p>
+      </div>
     </div>
   );
 };
