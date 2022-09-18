@@ -15,9 +15,14 @@ export function UserProvider({ children }) {
     setConversation(arr);
   };
 
+  const [randomList, setRandomList] = useState([]);
+  const handleRandomList = (arr) => {
+    setRandomList(arr);
+  };
+
   return (
     <UserContext.Provider
-      value={{ user, handleUser, conversation, handleConversation }}
+      value={{ user, handleUser, conversation, handleConversation, randomList, handleRandomList }}
     >
       {children}
     </UserContext.Provider>
