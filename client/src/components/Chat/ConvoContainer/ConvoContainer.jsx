@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './ConvoContainer.scss';
 import ConvoPreview from '../ConvoPreview/ConvoPreview';
 import { useFetch } from '../../../hooks/useFetch';
+import { useContext } from 'react';
+import UserContext from '../../../context/UserContext.jsx';
 
 const ConvoContainer = () => {
   const [conversation, setConversation] = useState([]);
@@ -13,8 +15,7 @@ const ConvoContainer = () => {
         setConversation(
           data.map((ele) => <ConvoPreview key={ele.id} conversation={ele} />)
         );
-      })
-      .then(() => console.log(conversation));
+      });
   }, []);
 
   return (
