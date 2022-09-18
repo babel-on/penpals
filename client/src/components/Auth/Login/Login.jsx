@@ -2,9 +2,11 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import './Login.scss';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const Login = ({ handleClick }) => {
   const { register, handleSubmit, reset } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = (data) =>
     fetch('/api/login', {
@@ -16,7 +18,7 @@ const Login = ({ handleClick }) => {
       body: JSON.stringify(data),
     })
       .then((res) => {
-        if (res.ok) return res.json();
+        if (res.ok) return navigate('/chat');
         else throw new Error('Invalid username or password!');
       })
       .then(() => reset())
