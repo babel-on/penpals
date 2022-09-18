@@ -16,7 +16,6 @@ conversationController.getConversations = async (req, res, next) => {
     // instead of using .map like civilized people...
     for (const conversation of user.conversations.values()) {
       await conversation.populate('users');
-      console.log(conversation);
       const partner = conversation.users.find((usr) => usr._id !== user._id);
       if (conversation.messageCount === 0)
         conversations.push({
@@ -168,9 +167,10 @@ conversationController.addMessageToConversation = async (req, res, next) => {
       author: res.locals.user.username,
       content: req.body.content,
       // we also add the message as-is as a valid translation for the user's current language
-      translations: {
-        [res.locals.user.language]: req.body.content,
-      },
+      // translations: {
+      //   [res.locals.user.language]: req.body.content,
+      // },
+      // ↑ disabled, because it was confusing for demonstrations
     };
     conversation.messages.push(message);
     res.locals.message = message;
