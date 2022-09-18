@@ -32,8 +32,11 @@ const Register = ({ handleClick }) => {
       transition={{ duration: 1 }}
     >
       <section className="register">
-        <button onClick={handleClick}>X</button>
+        {/* <button onClick={handleClick}>X</button> */}
         <h2>Register</h2>
+        <p>
+          Already a user? <a onClick={handleClick}>Sign in</a>
+        </p>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-container">
             <div className="input-wrapper">
