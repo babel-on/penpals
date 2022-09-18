@@ -130,8 +130,11 @@ userController.changeLanguage = async (req, res, next) => {
     { language: req.body.language },
     { new: true }
   );
-  res.locals.user = user;
-  // delete res.locals.user.passwordHash;
+  res.locals.user = {
+    username: user.username,
+    _id: user._id,
+    language: user.language,
+  };
   next();
 };
 
