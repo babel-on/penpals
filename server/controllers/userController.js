@@ -98,7 +98,7 @@ userController.verifyUser = async (req, res, next) => {
         _id: user._id,
         conversations: user.conversations,
         language: user.language,
-        username: user.username
+        username: user.username,
       };
       res.locals.user = resObj;
       return next();
@@ -136,7 +136,7 @@ userController.get10Users = async (req, res, next) => {
 
     if (allusers.length < 10) {
       res.locals.userList = allusers;
-      return next(); 
+      return next();
     }
     while (randomUsers.length <= 10) {
       const randomNum = Math.floor(Math.random() * allusers.length);

@@ -41,7 +41,6 @@ app.use('*', (req, res) => {
 
 // global Err handler
 app.use((err, req, res, next) => {
-  console.log(err);
   const defaultError = {
     log: 'Unknown error occurred',
     status: 500,
