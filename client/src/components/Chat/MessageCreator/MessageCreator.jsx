@@ -18,8 +18,8 @@ const MessageCreator = () => {
   */
   //after post, doesn't have to append the new message to message box directly, but should signal to it to re-fetch conversation
   
-  const clickHandler = (e) => {
-    
+  const handleClick = (e) => {
+
   }
 
   //needs event handler onclick for button to submit form message to route
@@ -29,7 +29,7 @@ const MessageCreator = () => {
       <input type="text"></input>
       {/* onchange for input field-> on change {(newValue) => setNewMessage(newValue.target.value)}? */}
 
-      <button onClick={clickHandler} className='sendButton'>Send</button>
+      <button onClick={handleClick} className='sendButton'>Send</button>
     </form>
   );
 };

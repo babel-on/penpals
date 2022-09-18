@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './ConvoContainer.scss';
 import ConvoPreview from '../ConvoPreview/ConvoPreview';
-<<<<<<< HEAD
 import RandomConvo from '../RandomConvo/RandomConvoContainer';
 import { useFetch } from '../../../hooks/useFetch';
-=======
->>>>>>> jigar
 
 const ConvoContainer = () => {
   const [conversation, setConversation] = useState([]);
