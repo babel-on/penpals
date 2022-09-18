@@ -53,7 +53,7 @@ userController.createUser = async (req, res, next) => {
       status: 400,
       message: 'Language required',
     });
-  if (!langCode.hasOwnProperty(req.body.language))
+  if (!langCode.hasOwnProperty.call(req.body.language))
     return next({
       log: null,
       status: 400,
@@ -85,14 +85,12 @@ userController.createUser = async (req, res, next) => {
 
 // verify user
 userController.verifyUser = async (req, res, next) => {
-  console.log('in verifyuser');
   try {
     const user = await User.findOne({ username: req.body.username });
     const passwordOk = await bcrypt.compare(
       req.body.password,
       user.passwordHash
     );
-    console.log(user, passwordOk);
     if (passwordOk) {
       const resObj = {
         _id: user._id,
