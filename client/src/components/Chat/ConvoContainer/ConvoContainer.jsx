@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './ConvoContainer.scss';
 import ConvoPreview from '../ConvoPreview/ConvoPreview';
+import RandomConvo from '../RandomConvo/RandomConvoContainer';
 import { useFetch } from '../../../hooks/useFetch';
 
 const ConvoContainer = () => {
@@ -19,6 +20,7 @@ const ConvoContainer = () => {
     <div className="convoContainer">
       <h1>convo container</h1>
       {conversation}
+      <RandomConvo /> 
     </div>
   );
 };
