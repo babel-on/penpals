@@ -1,8 +1,11 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import UserContext from '../../../context/UserContext';
 import './Settings.scss';
 
 const Settings = () => {
+  const navigate = useNavigate();
+
   const { user, handleUser } = useContext(UserContext);
 
   const handleOpen = (e) => {
@@ -33,8 +36,9 @@ const Settings = () => {
         />
       </svg>
       <div className="settings">
+        <button className="x" onClick={handleClose}></button>
         <div className="select-container">
-          <label htmlFor="custom-select">Select a Language:</label>
+          <label htmlFor="custom-select">Change Your Language:</label>
           <select
             id="custom-select"
             className="custom-select"
@@ -81,6 +85,14 @@ const Settings = () => {
             <option value="ZH">Chinese</option>
           </select>
         </div>
+        <button
+          className="sign-out"
+          onClick={() => {
+            fetch('/api/login', { method: 'DELETE' }).then(() => navigate('/'));
+          }}
+        >
+          Sign Out
+        </button>
       </div>
     </>
   );

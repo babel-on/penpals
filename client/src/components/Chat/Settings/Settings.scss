@@ -12,16 +12,22 @@
 }
 
 .settings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: absolute;
   right: 2rem;
   top: 1.5rem;
   overflow: hidden;
   transform: translateY(-500%);
   z-index: 1;
-  transition: all 1s ease;
+  transition: all 1s ease-in-out;
   width: 200px;
-  height: 200px;
+  height: 250px;
   background-color: white;
+  border-radius: 1rem;
+  box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.2);
+
   .select-container {
     display: flex;
     flex-direction: column;
@@ -59,6 +65,49 @@
         color: white;
         opacity: 0.9;
       }
+    }
+  }
+  label {
+    font-family: 'Roboto';
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 1.5rem 0 0 0.5rem;
+    color: rgb(61, 62, 159);
+  }
+
+  .x {
+    height: 12px;
+    width: 12px;
+    border: 0;
+    position: fixed;
+    right: 10px;
+    top: 5px;
+    border-radius: 75%;
+    background-color: rgb(229, 109, 89);
+    opacity: 0.8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+  }
+
+  .sign-out {
+    background-color: rgb(229, 109, 89);
+    border: 0;
+    opacity: 0.8;
+    margin-top: 2.5rem;
+    width: 50%;
+    height: 15%;
+    border-radius: 5px;
+    color: white;
+
+    &:hover {
+      opacity: 1;
+      cursor: pointer;
     }
   }
 }
