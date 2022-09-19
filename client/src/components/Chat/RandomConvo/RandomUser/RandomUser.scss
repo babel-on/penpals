@@ -1,4 +1,4 @@
-.randomUser { 
+.randomUser {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -13,10 +13,10 @@
 
   &:hover {
     background-color: #f1f5f8;
+    cursor: pointer;
   }
 
   .randomUserName {
     color: rgb(61, 62, 159);
   }
-
 }

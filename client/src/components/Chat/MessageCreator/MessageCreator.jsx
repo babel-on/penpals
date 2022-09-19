@@ -39,7 +39,6 @@ const MessageCreator = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         handleMessages((prevState) => [
           ...prevState,
           <OutgoingMessages

@@ -34,13 +34,20 @@ const Container = () => {
   // });
 
   return (
+<<<<<<< HEAD
     <div className="container">
       <h1 className='title'>Penpals</h1>
+=======
+    <>
+>>>>>>> jigar
       <Settings />
-      <RandomConvo />
-      <ChatContainer />
-      <ConvoContainer />
-    </div>
+      <div className="container">
+        {/* <Navbar /> */}
+        <RandomConvo />
+        <ChatContainer />
+        <ConvoContainer />
+      </div>
+    </>
   );
 };
 

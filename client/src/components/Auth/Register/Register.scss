@@ -109,6 +109,10 @@
       color: white;
       opacity: 0.8;
       margin-top: 1rem;
+
+      option {
+        color: black;
+      }
     }
     .custom-select:hover {
       opacity: 1;
