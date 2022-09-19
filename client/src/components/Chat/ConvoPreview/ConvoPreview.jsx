@@ -102,6 +102,13 @@ const ConvoPreview = ({ conversation }) => {
     break;
   }
 
+  let displayLang = '';
+  if (conversation.partnerLanguage === 'EN-US' || conversation.partnerLanguage === 'EN-GB') {
+    displayLang = 'EN';
+  } else {
+    displayLang = conversation.partnerLanguage;
+  }
+
   return (
     <div
       className="convoPreview"
@@ -110,7 +117,7 @@ const ConvoPreview = ({ conversation }) => {
       }}
     >
       <div className="convoHeader">
-        <p>{conversation.partnerLanguage}</p>
+        <p>{displayLang}</p>
         <img
           src={flagImgSrc}
           height="50px"
