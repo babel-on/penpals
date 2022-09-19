@@ -1,5 +1,30 @@
-.incomingMessage {
-  color: red;
+.messageBox {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 1rem;
+  background-color: white;
+  .incomingMessage {
+    display: flex;
+    color:#222831;
+    background-color: rgb(236,240,249);
+    border-radius: 1rem;
+    width: max-content;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    right: 0px;
+    padding: 2px 8px;
+  }
+
+  .outgoingMessage {
+    color: white;
+    background-color: rgb(76,104,239);
+    border-radius: 1rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: max-content;
+    padding: 2px 8px;
+    align-self: flex-end;
+  }
 }
-.outgoingMessage {
-}
+

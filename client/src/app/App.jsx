@@ -32,7 +32,6 @@ const App = () => {
   const handleNewRandomConvo = (invitee) => {
     setCurrentConversation(invitee);
   };
-
   const [messages, setMessages] = useState([]);
   const handleMessages = (arr) => {
     setMessages(arr);
