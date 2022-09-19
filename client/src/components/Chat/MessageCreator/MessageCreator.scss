@@ -1,0 +1,19 @@
+.messageCreator {
+  input {
+    width: 500px;
+    height: 35px;
+    font-size:24px;
+    box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-right:10px;
+    font-family: 'Poppins', sans-serif;
+
+  }
+  .sendButton {
+    font-size: 17px;
+    padding: 5px;
+    font-family: 'Poppins', sans-serif;
+    background: transparent;
+    border-radius: 10px;
+  }
+}
