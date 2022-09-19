@@ -1,11 +1,11 @@
 .randomListContainer {
-  height: 70vh;
+  height: 90vh;
   width: 13.5vw;
   display: flex;
   flex-direction: column;
-  position: fixed;
-  top:100px;
-  left:20px;
+  // position: fixed;
+  // top:100px;
+  // left:20px;
   background-color: white;
   box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.1);
   border-radius: 1rem;
@@ -21,9 +21,8 @@
     width: 80%;
     margin: 2rem auto 1rem auto;
     padding-bottom: 1rem;
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-family: 'Poppins', sans-serif;
     color: rgb(61, 62, 159);
   }
-
 }

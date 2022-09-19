@@ -18,7 +18,9 @@ const RandomUser = ({ user }) => {
           body: JSON.stringify({ invitee: user.userId }),
         })
           .then((res) => res.json())
-          .then((data) => handleCurrentConversation(data.id));
+          .then((data) =>
+            handleCurrentConversation([data.id, data.partnerUsername])
+          );
       }}
     >
       <img

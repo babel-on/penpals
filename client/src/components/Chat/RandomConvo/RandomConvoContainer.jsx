@@ -20,7 +20,7 @@ const RandomConvo = () => {
 
   return (
     <div className={drag}>
-      <h2>Random Users</h2>
+      <h2>Meet a new Penpal</h2>
       {randomList}
     </div>
   );
