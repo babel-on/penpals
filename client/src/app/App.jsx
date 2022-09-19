@@ -33,10 +33,7 @@ const App = () => {
     setCurrentConversation(invitee);
   };
 
-  const [messages, setMessages] = useState([]);
-  const handleMessages = (arr) => {
-    setMessages(arr);
-  };
+  const [messages, handleMessages] = useState([]);
 
   useEffect(() => {
     fetch('/api/login')

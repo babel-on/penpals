@@ -18,7 +18,8 @@ const ConvoContainer = () => {
           data.map((ele) => <ConvoPreview key={ele.id} conversation={ele} />)
         );
         setTimeout(updateMessages, 3000);
-      });
+      })
+      .catch(() => setTimeout(updateMessages, 3000));
   };
   return (
     <div className={drag}>

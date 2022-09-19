@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import UserContext from '../../../context/UserContext';
 import IncomingMessages from '../../Chat/MessageBox/Messages/IncomingMessages';
 import OutgoingMessages from '../../Chat/MessageBox/Messages/OutgoingMessages';
@@ -8,17 +8,29 @@ import './Messages/messages.scss';
 const MessageBox = () => {
   const { currentConversation, user, messages, handleMessages } =
     useContext(UserContext);
+  const timeoutRef = useRef(null);
 
   useEffect(() => {
-    console.log(currentConversation);
-    if (!currentConversation.length) return;
+    clearTimeout(timeoutRef.current);
+    fetchCurrentConvo();
+    return () => {
+      clearTimeout(timeoutRef.current);
+    };
+  }, [currentConversation]);
+
+  const fetchCurrentConvo = () => {
+    // if (!currentConversation.length) return;
+    timeoutRef.current = setTimeout(fetchCurrentConvo, 3000);
     fetch(`/api/conversation/${currentConversation[0]}`)
       .then((res) => {
-        if (messages.length) handleMessages([]);
+        if (res.status !== 200) {
+          throw new Error('Bad data! waiting for the next heartbeat');
+        }
         return res.json();
       })
       .then((data) => {
         console.log(data);
+        handleMessages((_) => []);
         for (let i = 0; i < data.length; i++) {
           if (data[i].author === user.username) {
             handleMessages((prevState) => [
@@ -40,8 +52,9 @@ const MessageBox = () => {
             ]);
           }
         }
-      });
-  }, [currentConversation[0]]);
+      })
+      .catch((err) => null);
+  };
 
   return (
     <div className="messageBox">
