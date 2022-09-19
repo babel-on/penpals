@@ -5,26 +5,22 @@ import IncomingMessages from '../../Chat/MessageBox/Messages/IncomingMessages';
 import OutgoingMessages from '../../Chat/MessageBox/Messages/OutgoingMessages';
 
 const MessageBox = () => {
-
-  const {currentConversation, user} = useContext(UserContext);
+  const { currentConversation, user } = useContext(UserContext);
   const messages = [];
+
   useEffect(() => {
+    console.log(currentConversation);
     fetch(`/api/conversation/${currentConversation}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-      });
-  });
-
-  /*
-          for (const message of data){
-          if (message.author === user){
-            messages.push(<OutgoingMessages message={message.content} />);
-          } else if (message.author !== user){
-            messages.push(<IncomingMessages message={message.content} />);
-          }
+        if (data[0].author === user) {
+          messages.push(<OutgoingMessages message={data[0].content} />);
+        } else if (data[0].author !== user) {
+          messages.push(<IncomingMessages message={data[0].content} />);
         }
-  */
+      });
+  }, [currentConversation]);
 
   return (
     <div className="messageBox">

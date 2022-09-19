@@ -1,6 +1,8 @@
 .auth {
   overflow: hidden;
   background-image: url('/auth.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
   .auth-container {
     display: flex;
     flex-direction: column;

@@ -2,9 +2,11 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import './Register.scss';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const Register = ({ handleClick }) => {
   const { register, handleSubmit, watch, reset } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     fetch('/api/register', {
@@ -14,7 +16,9 @@ const Register = ({ handleClick }) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ ...data }),
-    }).then(() => reset());
+    })
+      .then(() => navigate('/chat'))
+      .then(() => reset());
   };
 
   const animations = {
