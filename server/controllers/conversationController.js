@@ -16,7 +16,9 @@ conversationController.getConversations = async (req, res, next) => {
     // instead of using .map like civilized people...
     for (const conversation of user.conversations.values()) {
       await conversation.populate('users');
-      const partner = conversation.users.find((usr) => usr._id !== user._id);
+      const partner = conversation.users.find(
+        (usr) => usr._id.toString() !== user._id.toString()
+      );
       if (conversation.messageCount === 0)
         conversations.push({
           id: conversation._id,
@@ -122,10 +124,12 @@ conversationController.addConversation = async (req, res, next) => {
   // creates a new conversation between the logged-in user and the user specified in the request body
   try {
     // verify user jwt before this
+    console.log(req.body);
     const [creator, invitee] = await Promise.all([
       User.findOne({ _id: res.locals.user.userId }).populate('conversations'),
       User.findOne({ _id: req.body.invitee }).populate('conversations'),
     ]);
+    console.log(creator, invitee);
     if (creator.partners && creator.partners[req.body.invitee]) {
       // check if the conversation already exists between those 2 users
       return next({
