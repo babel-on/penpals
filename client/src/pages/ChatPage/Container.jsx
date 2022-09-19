@@ -35,7 +35,7 @@ const Container = () => {
 
   return (
     <div className="container">
-      {/* <Navbar /> */}
+      <h1 className='title'>Penpals</h1>
       <Settings />
       <RandomConvo />
       <ChatContainer />

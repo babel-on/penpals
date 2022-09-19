@@ -27,6 +27,9 @@ const RandomUser = ({ user }) => {
   case 'EN-US':
     flagImgSrc = 'https://cdn-icons-png.flaticon.com/512/197/197484.png';
     break;
+  case 'EN-GB':
+    flagImgSrc = 'https://cdn-icons-png.flaticon.com/512/197/197374.png';
+    break;
   case 'ES':
     flagImgSrc = 'https://cdn-icons-png.flaticon.com/512/197/197397.png';
     break;
@@ -94,6 +97,13 @@ const RandomUser = ({ user }) => {
     flagImgSrc = 'https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png';
     break;
   }
+  //getting rid of janky 'EN-US' tag on random user because it messed with space-between
+  let displayLang = '';
+  if (user.language === 'EN-US'){
+    displayLang = 'EN';
+  } else {
+    displayLang = user.language;
+  }
 
   return (
     <div
@@ -117,7 +127,7 @@ const RandomUser = ({ user }) => {
         height="50px"
       ></img>
       <p className="randomUserName">{user.username}</p>
-      <p className="randomUserLang">{user.language}</p>
+      <p className="randomUserLang">{displayLang}</p>
     </div>
   );
 };

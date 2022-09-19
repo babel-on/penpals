@@ -54,7 +54,7 @@ const MessageCreator = () => {
 
   return (
     <form className="messageCreator" onSubmit={handleSubmit(onSubmit)}>
-      <input type="text" {...register('content')}></input>
+      <input type="text" autoComplete='off' spellCheck='false' {...register('content')}></input>
       {/* onchange for input field-> on change {(newValue) => setNewMessage(newValue.target.value)}? */}
       <button className="sendButton">Send</button>
     </form>

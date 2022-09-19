@@ -27,10 +27,6 @@
       opacity: 1;
       cursor: pointer;
     }
-    &:active {
-      transform: scale(0.98);
-      box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
-    }
   }
 
   input {
@@ -40,5 +36,10 @@
     width: 85%;
     padding-left: 1rem;
     height: 2rem;
+
+    &:focus {
+      outline: none;
+    }
   }
+
 }
