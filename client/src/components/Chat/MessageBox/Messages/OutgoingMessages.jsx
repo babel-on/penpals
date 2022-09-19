@@ -28,8 +28,8 @@ const OutgoingMessages = ({ id, message }) => {
     <div className="message-container">
       {modal && (
         <div className="modal">
-          <button>Edit</button>
-          <button onClick={handleDelete}>Delete</button>
+          <button className='editButton'>Edit</button>
+          <button onClick={handleDelete} className='deleteButton' >Delete</button>
         </div>
       )}
       <div className="outgoingMessage">
