@@ -25,11 +25,11 @@ const MessageCreator = () => {
   //needs event handler onclick for button to submit form message to route
   //after posting message to conversation should also update state of message box
 
-  const { register, handleSubmit, reset } = useForm();
-  const { currentConversation, handleMessages } = useContext(UserContext);
+  const { register, handleSubmit, reset} = useForm();
+  const { messageID, conversation, setEdit, edit, editContent, currentConversation, handleMessages } = useContext(UserContext);
 
   const onSubmit = (data) => {
-    console.log(currentConversation);
+   
     fetch(`/api/conversation/${currentConversation[0]}`, {
       method: 'POST',
       headers: {
@@ -51,12 +51,39 @@ const MessageCreator = () => {
       .then(() => reset());
   };
 
+  // if edit is true, we want to submit a put request to update the content of that message 
+  const onUpdate = (data) => {
+    fetch(`/api/conversation/${currentConversation[0]}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({content: data.content, messageId: messageID}),
+    })
+      .then(res => res.json())
+      .then((data) => {
+        console.log(data);
+        setEdit(false); 
+      })
+      .then(() => reset());
+    
+  };
+  
   return (
-    <form className="messageCreator" onSubmit={handleSubmit(onSubmit)}>
-      <input type="text" autoComplete='off' spellCheck='false' {...register('content')}></input>
-      {/* onchange for input field-> on change {(newValue) => setNewMessage(newValue.target.value)}? */}
-      <button className="sendButton">Send</button>
-    </form>
+    <div>
+      {edit === false && <form className="messageCreator" onSubmit={handleSubmit(onSubmit)}>
+        <input type="text" {...register('content')}></input>
+        <button className="sendButton">Send</button>
+      </form> 
+      }
+      {edit === true &&
+      <form className="messageEditor" onSubmit={handleSubmit(onUpdate)}>
+        <input type="text" {...register('content')} defaultValue={editContent}></input>
+        <button className="sendEditButton">Edit</button>
+        <button type='button' onClick ={()=> setEdit(false)}className="cancelButton">Cancel</button>
+      </form>
+      }
+    </div>
   );
 };
 
