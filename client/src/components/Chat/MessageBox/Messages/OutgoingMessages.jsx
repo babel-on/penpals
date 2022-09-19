@@ -2,7 +2,15 @@ import React, { useContext, useState } from 'react';
 import UserContext from '../../../../context/UserContext';
 import './messages.scss';
 const OutgoingMessages = ({ id, message }) => {
-  const {messageID,setMessageId, edit, setEditContent, setEdit, currentConversation, handleMessages } = useContext(UserContext);
+  const {
+    messageID,
+    setMessageId,
+    edit,
+    setEditContent,
+    setEdit,
+    currentConversation,
+    handleMessages,
+  } = useContext(UserContext);
   const [modal, setModal] = useState(false);
 
   const handleClick = (e) => {
@@ -10,7 +18,7 @@ const OutgoingMessages = ({ id, message }) => {
   };
 
   const handleDelete = () => {
-    setModal((prevState) => !prevState);
+    // setModal((prevState) => !prevState);
     fetch(`/api/conversation/${currentConversation[0]}`, {
       method: 'DELETE',
       headers: {
@@ -28,15 +36,19 @@ const OutgoingMessages = ({ id, message }) => {
     <div className="message-container">
       {modal && (
         <div className="modal">
-          {edit === false && <button 
-            onClick={()=> {
-              console.log('ID is',id);
-              setMessageId(id);
-              setEdit(true);
-              setEditContent(`${message}`); 
-              console.log('MESSAGE ID IS ', messageID);
-            }
-            }>Edit</button>}
+          {edit === false && (
+            <button
+              onClick={() => {
+                console.log('ID is', id);
+                setMessageId(id);
+                setEdit(true);
+                setEditContent(`${message}`);
+                console.log('MESSAGE ID IS ', messageID);
+              }}
+            >
+              Edit
+            </button>
+          )}
           {edit === false && <button onClick={handleDelete}>Delete</button>}
         </div>
       )}
