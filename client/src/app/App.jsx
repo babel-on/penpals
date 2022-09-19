@@ -39,7 +39,6 @@ const App = () => {
     fetch('/api/login')
       .then((res) => res.json())
       .then((data) => {
-        console.log('JSON: ' + data);
         if (data.username) {
           handleUser(data);
         }
