@@ -19,6 +19,11 @@ router.post(
   }
 );
 
+router.delete('/login', (req, res) => {
+  res.clearCookie('jwt');
+  res.sendStatus(204);
+});
+
 router.post(
   '/register',
   userController.createUser,
