@@ -19,7 +19,6 @@ conversationController.getConversations = async (req, res, next) => {
       const partner = conversation.users.find(
         (usr) => usr._id.toString() !== user._id.toString()
       );
-      console.log(partner);
       if (conversation.messageCount === 0)
         conversations.push({
           id: conversation._id,
