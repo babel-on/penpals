@@ -4,10 +4,11 @@
   font-family: 'Poppins', sans-serif;
   border-radius: 1rem;
   background-color: white;
-  padding: 30px;
+  padding: 0px 30px 30px 30px;
   width: 90%;
   margin: 0 auto;
   overflow-y: scroll;
+  overflow-x: hidden;
 
   .incomingMessage {
     display: flex;
@@ -17,7 +18,7 @@
     width: max-content;
     margin-top: 10px;
     margin-bottom: 10px;
-    max-width: 75%;
+    max-width: 70%;
     right: 0px;
     padding: 6px 10px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
@@ -30,10 +31,23 @@
     margin-top: 10px;
     margin-bottom: 10px;
     width: max-content;
-    max-width: 75%;
+    max-width: 70%;
     padding: 6px 10px;
     align-self: flex-end;
     box-shadow: 2px 2px 5px rgba(76, 104, 239, 0.7);
+
+    &:hover {
+      opacity: 0.95;
+      cursor: pointer;
+    }
+
+  }
+
+  h2 {
+    width: 102%;
+    position: sticky;
+    top: 0;
+    background-color: white;
   }
 
   .message-container {
@@ -69,4 +83,45 @@
                      color-stop(0.44, rgb(134,151,255)),
                      color-stop(0.72, rgb(76,104,239)),
                      color-stop(0.86, rgb(61,63,163)));
+}
+
+.editButton {
+  color: white;
+  background-color: rgb(76, 104, 239);
+  border: none;
+  border-radius: 1rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  width: max-content;
+  max-width: 75%;
+  margin-right: 10px;
+  padding: 6px 18px;
+  align-self: flex-end;
+  box-shadow: 2px 2px 5px rgba(76, 104, 239, 0.7);
+
+  &:hover {
+    opacity: 0.7;
+    cursor: pointer;
+  }
+
+}
+
+.deleteButton {
+  color: white;
+  background-color: rgb(76, 104, 239);
+  border-radius: 1rem;
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  width: max-content;
+  max-width: 75%;
+  padding: 6px 10px;
+  align-self: flex-end;
+  box-shadow: 2px 2px 5px rgba(76, 104, 239, 0.7);
+
+  &:hover {
+    opacity: 0.7;
+    cursor: pointer;
+  }
+
 }

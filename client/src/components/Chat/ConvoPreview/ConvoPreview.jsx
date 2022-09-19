@@ -31,6 +31,9 @@ const ConvoPreview = ({ conversation }) => {
   case 'EN-US':
     flagImgSrc = 'https://cdn-icons-png.flaticon.com/512/197/197484.png';
     break;
+  case 'EN-GB':
+    flagImgSrc = 'https://cdn-icons-png.flaticon.com/512/197/197374.png';
+    break;
   case 'ES':
     flagImgSrc = 'https://cdn-icons-png.flaticon.com/512/197/197397.png';
     break;
