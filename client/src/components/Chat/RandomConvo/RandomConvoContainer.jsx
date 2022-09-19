@@ -14,7 +14,7 @@ const RandomConvo = () => {
           data.map((el) => <RandomUser key={el._id} user={el} />)
         );
       });
-  }, [randomList]);
+  }, []);
 
   const drag = 'randomListContainer drag';
 
