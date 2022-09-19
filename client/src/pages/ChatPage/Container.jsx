@@ -17,21 +17,20 @@ const Container = () => {
   //   setConversation();
   // };
   const position = { x: 0, y: 0 };
-  const position2 = { x: 0, y: 0 };
 
-  interact('.drag').draggable({
-    listeners: {
-      start(event) {
-        console.log(event.type, event.target);
-      },
-      move(event) {
-        position.x += event.dx;
-        position.y += event.dy;
+  // interact('.randomListContainer').draggable({
+  //   listeners: {
+  //     start(event) {
+  //       console.log(event.type, event.target);
+  //     },
+  //     move(event) {
+  //       position.x += event.dx;
+  //       position.y += event.dy;
 
-        event.target.style.transform = `translate(${position.x}px, ${position.y}px)`;
-      },
-    },
-  });
+  //       event.target.style.transform = `translate(${position.x}px, ${position.y}px)`;
+  //     },
+  //   },
+  // });
 
   return (
     <div className="container">

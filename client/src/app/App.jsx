@@ -23,15 +23,16 @@ const App = () => {
     setRandomList(arr);
   };
 
-  const [currentConversation, setCurrentConversation] = useState(null);
-  const handleCurrentConversation = (id) => {
-    setCurrentConversation(id);
+  const [currentConversation, setCurrentConversation] = useState([]);
+  const handleCurrentConversation = (arr) => {
+    setCurrentConversation(arr);
   };
 
   const [newRandomConvo, setNewRandomConvo] = useState(null);
   const handleNewRandomConvo = (invitee) => {
     setCurrentConversation(invitee);
   };
+
   const [messages, setMessages] = useState([]);
   const handleMessages = (arr) => {
     setMessages(arr);
