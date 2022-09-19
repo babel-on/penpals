@@ -34,12 +34,8 @@ const Container = () => {
   // });
 
   return (
-<<<<<<< HEAD
     <div className="container">
-      <h1 className='title'>Penpals</h1>
-=======
-    <>
->>>>>>> jigar
+      <h1 className="title">Penpals</h1>
       <Settings />
       <div className="container">
         {/* <Navbar /> */}
@@ -47,7 +43,7 @@ const Container = () => {
         <ChatContainer />
         <ConvoContainer />
       </div>
-    </>
+    </div>
   );
 };
 
