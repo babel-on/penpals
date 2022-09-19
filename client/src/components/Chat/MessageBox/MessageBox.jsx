@@ -29,7 +29,6 @@ const MessageBox = () => {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
         handleMessages((_) => []);
         for (let i = 0; i < data.length; i++) {
           if (data[i].author === user.username) {

@@ -35,11 +35,14 @@ const Container = () => {
 
   return (
     <div className="container">
-      <h1 className='title'>Penpals</h1>
+      <h1 className="title">Penpals</h1>
       <Settings />
-      <RandomConvo />
-      <ChatContainer />
-      <ConvoContainer />
+      <div className="container">
+        {/* <Navbar /> */}
+        <RandomConvo />
+        <ChatContainer />
+        <ConvoContainer />
+      </div>
     </div>
   );
 };
