@@ -6,17 +6,19 @@ import MessageCreator from '../MessageCreator/MessageCreator';
 import './Messages/messages.scss';
 
 const MessageBox = () => {
+  const [loading, setLoading] = useState(true);
   const { currentConversation, user, messages, handleMessages } =
     useContext(UserContext);
   const timeoutRef = useRef(null);
 
   useEffect(() => {
+    setLoading(true);
     clearTimeout(timeoutRef.current);
     fetchCurrentConvo();
     return () => {
       clearTimeout(timeoutRef.current);
     };
-  }, [currentConversation]);
+  }, [currentConversation, user.language]);
 
   const fetchCurrentConvo = () => {
     // if (!currentConversation.length) return;
@@ -51,6 +53,7 @@ const MessageBox = () => {
             ]);
           }
         }
+        setLoading(false);
       })
       .catch((err) => null);
   };
@@ -58,7 +61,7 @@ const MessageBox = () => {
   return (
     <div className="messageBox">
       <h2>{currentConversation[1]}</h2>
-      {messages}
+      {loading ? <div>Loading...</div> : messages}
     </div>
   );
 };

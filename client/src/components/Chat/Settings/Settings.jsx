@@ -3,7 +3,7 @@ import UserContext from '../../../context/UserContext';
 import './Settings.scss';
 
 const Settings = () => {
-  const { user } = useContext(UserContext);
+  const { user, handleUser } = useContext(UserContext);
 
   const handleOpen = (e) => {
     console.log(e);
@@ -47,7 +47,7 @@ const Settings = () => {
                 },
                 body: JSON.stringify({ language: e.target.value }),
               });
-              console.log(e.target.value);
+              handleUser({ ...user, language: e.target.value });
             }}
           >
             <option value="BG">Bulgarian</option>
