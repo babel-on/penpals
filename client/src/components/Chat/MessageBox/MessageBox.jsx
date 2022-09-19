@@ -3,6 +3,7 @@ import UserContext from '../../../context/UserContext';
 import IncomingMessages from '../../Chat/MessageBox/Messages/IncomingMessages';
 import OutgoingMessages from '../../Chat/MessageBox/Messages/OutgoingMessages';
 import MessageCreator from '../MessageCreator/MessageCreator';
+import './Messages/messages.scss';
 
 const MessageBox = () => {
   const { currentConversation, user, messages, handleMessages } =
