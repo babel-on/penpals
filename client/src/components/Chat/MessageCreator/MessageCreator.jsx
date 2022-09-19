@@ -26,7 +26,7 @@ const MessageCreator = () => {
   //after posting message to conversation should also update state of message box
 
   const { register, handleSubmit, reset } = useForm();
-  const { currentConversation, handleMessages } = useContext(UserContext);
+  const { setEdit, edit, editContent, currentConversation, handleMessages } = useContext(UserContext);
 
   const onSubmit = (data) => {
     console.log(currentConversation);
@@ -52,11 +52,29 @@ const MessageCreator = () => {
       .then(() => reset());
   };
 
+  // if edit is true, we want to submit a put request to update the content of that message 
+  const onUpdate = (data) => {
+    fetch(`/api/conversation/${currentConversation[0]}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then(res => res.json())
+      .then((data) => console.log(data))
+      .then(() => reset());
+    
+  };
+  
   return (
     <form className="messageCreator" onSubmit={handleSubmit(onSubmit)}>
-      <input type="text" {...register('content')}></input>
-      {/* onchange for input field-> on change {(newValue) => setNewMessage(newValue.target.value)}? */}
-      <button className="sendButton">Send</button>
+      {edit === false && <input type="text" {...register('content')}></input>}
+      {edit === false && <button className="sendButton">Send</button>}
+      {edit === true && <input type="text" {...register('content')} value={editContent}></input>}
+      {edit === true && <button className="sendEditButton">Send</button>}
+      {edit === true && <button onClick ={()=> setEdit(false)}className="cancelButton">Cancel</button>}
+
     </form>
   );
 };

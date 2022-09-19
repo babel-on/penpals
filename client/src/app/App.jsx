@@ -35,6 +35,9 @@ const App = () => {
 
   const [messages, handleMessages] = useState([]);
 
+  const [edit, setEdit] = useState(false);
+  
+  const [editContent, setEditContent] = useState(null);
   useEffect(() => {
     fetch('/api/login')
       .then((res) => res.json())
@@ -61,6 +64,10 @@ const App = () => {
         handleNewRandomConvo,
         messages,
         handleMessages,
+        edit,
+        setEdit,
+        editContent,
+        setEditContent,
       }}
     >
       <BrowserRouter>
