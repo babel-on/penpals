@@ -18,7 +18,7 @@ const MessageBox = () => {
     return () => {
       clearTimeout(timeoutRef.current);
     };
-  }, [currentConversation, user.language]);
+  }, [currentConversation]);
 
   const fetchCurrentConvo = () => {
     // if (!currentConversation.length) return;
