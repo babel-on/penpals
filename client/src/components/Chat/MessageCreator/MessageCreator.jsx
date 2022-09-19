@@ -72,13 +72,13 @@ const MessageCreator = () => {
   return (
     <div>
       {edit === false && <form className="messageCreator" onSubmit={handleSubmit(onSubmit)}>
-        <input type="text" {...register('content')}></input>
+        <input type="text" autoComplete='off' {...register('content')}></input>
         <button className="sendButton">Send</button>
       </form> 
       }
       {edit === true &&
       <form className="messageEditor" onSubmit={handleSubmit(onUpdate)}>
-        <input type="text" {...register('content')} defaultValue={editContent}></input>
+        <input type="text" autoComplete='off' {...register('content')} defaultValue={editContent}></input>
         <button className="sendEditButton">Edit</button>
         <button type='button' onClick ={()=> setEdit(false)}className="cancelButton">Cancel</button>
       </form>
