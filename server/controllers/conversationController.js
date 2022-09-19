@@ -101,6 +101,7 @@ conversationController.getConversation = async (req, res, next) => {
         conversation.markModified('messages');
       }
     }
+    // res.locals.messageCount = conversation.messageCount;
     res.locals.conversation = conversation.messages.map((message) => {
       return {
         id: message._id,

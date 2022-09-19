@@ -15,8 +15,10 @@ const ConvoContainer = () => {
       });
   }, [conversation]);
 
+  const drag = 'convoContainer drag';
+
   return (
-    <div className="convoContainer">
+    <div className={drag}>
       <h2>Messages</h2>
       {conversation}
     </div>

@@ -6,17 +6,16 @@ import MessageCreator from '../MessageCreator/MessageCreator';
 import './Messages/messages.scss';
 
 const MessageBox = () => {
-  const { currentConversation, user, messages, handleMessages } =
+  const { conversation, currentConversation, user, messages, handleMessages } =
     useContext(UserContext);
 
   useEffect(() => {
     if (currentConversation === null) return;
     fetch(`/api/conversation/${currentConversation}`)
       .then((res) => {
-        handleMessages([]);
+        if (messages.length) handleMessages([]);
         return res.json();
       })
-
       .then((data) => {
         for (let i = 0; i < data.length; i++) {
           if (data[i].author === user.username) {

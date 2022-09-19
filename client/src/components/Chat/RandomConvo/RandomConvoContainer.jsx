@@ -5,7 +5,7 @@ import './RandomConvo.scss';
 
 const RandomConvo = () => {
   const { randomList, handleRandomList } = useContext(UserContext);
-  
+
   useEffect(() => {
     fetch('/api/getusers')
       .then((res) => res.json())
@@ -14,10 +14,12 @@ const RandomConvo = () => {
           data.map((el) => <RandomUser key={el._id} user={el} />)
         );
       });
-  }, []);
+  }, [randomList]);
+
+  const drag = 'randomListContainer drag';
 
   return (
-    <div className="randomListContainer">
+    <div className={drag}>
       <h2>Random Users</h2>
       {randomList}
     </div>

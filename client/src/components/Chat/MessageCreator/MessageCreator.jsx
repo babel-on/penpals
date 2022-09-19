@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import UserContext from '../../../context/UserContext';
 import { useForm } from 'react-hook-form';
+import OutgoingMessages from '../MessageBox/Messages/OutgoingMessages';
 
 const MessageCreator = () => {
   // const [newMessage, setNewMessage] = useState('');
@@ -38,7 +39,10 @@ const MessageCreator = () => {
     })
       .then((res) => res.json())
       .then((data) =>
-        handleMessages((prevState) => [...prevState, data.content])
+        handleMessages((prevState) => [
+          ...prevState,
+          <OutgoingMessages message={data.content} key={data.id} />,
+        ])
       )
       .then(() => reset());
   };
