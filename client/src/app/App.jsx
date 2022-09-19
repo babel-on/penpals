@@ -28,6 +28,11 @@ const App = () => {
     setCurrentConversation(id);
   };
 
+  const [newRandomConvo, setNewRandomConvo] = useState(null);
+  const handleNewRandomConvo = (invitee) => {
+    setCurrentConversation(invitee);
+  };
+
   useEffect(() => {
     fetch('/api/login')
       .then((res) => res.json())
@@ -50,6 +55,8 @@ const App = () => {
         handleCurrentConversation,
         randomList,
         handleRandomList,
+        newRandomConvo,
+        handleNewRandomConvo
       }}
     >
       <BrowserRouter>

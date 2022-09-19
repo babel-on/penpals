@@ -1,10 +1,11 @@
 import React, { useEffect, useContext } from 'react';
 import RandomUser from './RandomUser/RandomUser';
 import UserContext from '../../../context/UserContext';
+import './RandomConvo.scss';
 
 const RandomConvo = () => {
   const { randomList, handleRandomList } = useContext(UserContext);
-
+  
   useEffect(() => {
     fetch('/api/getusers')
       .then((res) => res.json())
@@ -16,8 +17,8 @@ const RandomConvo = () => {
   }, []);
 
   return (
-    <div className="randomList">
-      <h1>Random Users</h1>
+    <div className="randomListContainer">
+      <h2>Random Users</h2>
       {randomList}
     </div>
   );

@@ -1,0 +1,21 @@
+.randomUser { 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1.5px solid #f1f5f8;
+  margin: 0 auto;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  font-family: 'Roboto';
+  color: black;
+
+  &:hover {
+    background-color: #f1f5f8;
+  }
+
+  .randomUserName {
+    color: rgb(61, 62, 159);
+  }
+
+}
