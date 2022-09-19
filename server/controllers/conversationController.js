@@ -95,6 +95,7 @@ conversationController.getConversation = async (req, res, next) => {
         message: 'You are not a member of this conversations',
       });
     for (const message of conversation.messages) {
+      if (!message.translations) message.translations = {};
       if (!(lang in message.translations)) {
         const translation = await fetchTranslation(lang, message.content);
         message.translations[lang] = translation.text;
