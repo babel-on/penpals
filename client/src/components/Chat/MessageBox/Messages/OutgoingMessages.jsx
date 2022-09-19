@@ -1,8 +1,8 @@
 import React from 'react';
-
-const OutgoingMessages = ({message}) => {
+import './messages.scss';
+const OutgoingMessages = ({ message }) => {
   return (
-    <div className='outgoingMessage'>
+    <div className="outgoingMessage">
       <p>{message}</p>
     </div>
   );
