@@ -9,7 +9,17 @@ const Landing2 = () => {
 
   useEffect(() => {
     const options = {
-      strings: ['Hello', 'Hola', 'Bonjour'],
+      strings: [
+        'Hello',
+        'Hola',
+        'Bonjour',
+        'Guten Tag',
+        '你好',
+        'こんにちは',
+        'Здравствуйте',
+        'Cześć',
+        'Χαίρετε',
+      ],
       typeSpeed: 150,
       backSpeed: 100,
       loop: true,
