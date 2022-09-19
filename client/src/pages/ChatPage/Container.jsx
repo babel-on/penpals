@@ -17,6 +17,7 @@ const Container = () => {
   //   setConversation();
   // };
   const position = { x: 0, y: 0 };
+  const randomPosition = { x: 0, y: 0 };
 
   interact('.convoContainer').draggable({
     listeners: {
@@ -31,17 +32,17 @@ const Container = () => {
       },
     },
   });
-  
+
   interact('.randomListContainer').draggable({
     listeners: {
       start(event) {
         console.log(event.type, event.target);
       },
       move(event) {
-        position.x += event.dx;
-        position.y += event.dy;
+        randomPosition.x += event.dx;
+        randomPosition.y += event.dy;
 
-        event.target.style.transform = `translate(${position.x}px, ${position.y}px)`;
+        event.target.style.transform = `translate(${randomPosition.x}px, ${randomPosition.y}px)`;
       },
     },
   });
