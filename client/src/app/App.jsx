@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.scss';
 import UserContext from '../context/UserContext';
@@ -28,27 +28,40 @@ const App = () => {
     setCurrentConversation(id);
   };
 
-  useEffect(
+  useEffect(() => {
     fetch('/api/login')
       .then((res) => res.json())
       .then((data) => {
         console.log('JSON: ' + data);
         if (data.username) {
-          console.log(data.username);
           handleUser(data);
         }
-      }, [])
-  );
+      });
+  }, []);
+
   return (
-    <BrowserRouter>
-      <AnimatePresence>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/chat" element={<Container />} />
-        </Routes>
-      </AnimatePresence>
-    </BrowserRouter>
+    <UserContext.Provider
+      value={{
+        user,
+        handleUser,
+        conversation,
+        handleConversation,
+        currentConversation,
+        handleCurrentConversation,
+        randomList,
+        handleRandomList,
+      }}
+    >
+      <BrowserRouter>
+        <AnimatePresence>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/chat" element={<Container />} />
+          </Routes>
+        </AnimatePresence>
+      </BrowserRouter>
+    </UserContext.Provider>
   );
 };
 

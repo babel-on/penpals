@@ -1,44 +1,5 @@
-import { React, createContext, useState } from 'react';
+import { createContext } from 'react';
 
-const UserContext = createContext();
-
-export function UserProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const handleUser = (user) => {
-    setUser(user);
-  };
-
-  const [conversation, setConversation] = useState([]);
-  const handleConversation = (arr) => {
-    setConversation(arr);
-  };
-
-  const [randomList, setRandomList] = useState([]);
-  const handleRandomList = (arr) => {
-    setRandomList(arr);
-  };
-
-  const [currentConversation, setCurrentConversation] = useState(null);
-  const handleCurrentConversation = (id) => {
-    setCurrentConversation(id);
-  };
-
-  return (
-    <UserContext.Provider
-      value={{
-        user,
-        handleUser,
-        conversation,
-        handleConversation,
-        currentConversation,
-        handleCurrentConversation,
-        randomList,
-        handleRandomList,
-      }}
-    >
-      {children}
-    </UserContext.Provider>
-  );
-}
+const UserContext = createContext(null);
 
 export default UserContext;
