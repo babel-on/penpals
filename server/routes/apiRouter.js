@@ -7,6 +7,9 @@ const userController = require('../controllers/userController.js');
 
 //handle login
 router.use('/conversation', conversationRouter);
+router.get('/login', jwtController.verify, (req, res) => {
+  res.status(200).json(res.locals.user);
+});
 router.post(
   '/login',
   userController.verifyUser,

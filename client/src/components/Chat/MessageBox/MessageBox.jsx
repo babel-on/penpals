@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import UserContext from '../../../context/UserContext';
 
 import IncomingMessages from '../../Chat/MessageBox/Messages/IncomingMessages';
@@ -6,20 +6,28 @@ import OutgoingMessages from '../../Chat/MessageBox/Messages/OutgoingMessages';
 
 const MessageBox = () => {
   const { currentConversation, user } = useContext(UserContext);
-  const messages = [];
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     if (currentConversation === null) return;
     fetch(`/api/conversation/${currentConversation}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        if (data[0].author === user) {
-          messages.push(<OutgoingMessages message={data[0].content} />);
-        } else if (data[0].author !== user) {
-          messages.push(<IncomingMessages message={data[0].content} />);
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].author === user.username) {
+            setMessages((prevState) => [
+              ...prevState,
+              <OutgoingMessages message={data[i].content} />,
+            ]);
+          } else if (data[i].author !== user.username) {
+            setMessages((prevState) => [
+              ...prevState,
+              <IncomingMessages message={data[i].content} />,
+            ]);
+          }
         }
-      });
+      })
+      .then(() => console.log(messages));
   }, [currentConversation]);
 
   return (
