@@ -19,6 +19,7 @@ conversationController.getConversations = async (req, res, next) => {
       const partner = conversation.users.find(
         (usr) => usr._id.toString() !== user._id.toString()
       );
+      console.log(partner);
       if (conversation.messageCount === 0)
         conversations.push({
           id: conversation._id,
@@ -148,7 +149,10 @@ conversationController.addConversation = async (req, res, next) => {
     creator.partners.push(invitee);
     invitee.partners.push(creator);
     await Promise.all([creator.save(), invitee.save()]);
-    res.locals.conversation = { id: conversation._id };
+    res.locals.conversation = {
+      id: conversation._id,
+      partnerUsername: invitee.username,
+    };
     next();
   } catch (err) {
     next({
