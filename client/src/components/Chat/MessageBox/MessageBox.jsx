@@ -9,7 +9,7 @@ const MessageBox = () => {
   const messages = [];
 
   useEffect(() => {
-    console.log(currentConversation);
+    if (currentConversation === null) return;
     fetch(`/api/conversation/${currentConversation}`)
       .then((res) => res.json())
       .then((data) => {
