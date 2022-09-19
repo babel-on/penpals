@@ -17,7 +17,7 @@ const ConvoContainer = () => {
         handleConversation(
           data.map((ele) => <ConvoPreview key={ele.id} conversation={ele} />)
         );
-        setInterval(updateMessages, 3000);
+        setTimeout(updateMessages, 3000);
       });
   };
   return (
