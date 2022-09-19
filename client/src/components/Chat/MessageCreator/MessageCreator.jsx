@@ -25,11 +25,11 @@ const MessageCreator = () => {
   //needs event handler onclick for button to submit form message to route
   //after posting message to conversation should also update state of message box
 
-  const { register, handleSubmit, reset } = useForm();
-  const { setEdit, edit, editContent, currentConversation, handleMessages } = useContext(UserContext);
+  const { register, handleSubmit, reset} = useForm();
+  const { messageID, conversation, setEdit, edit, editContent, currentConversation, handleMessages } = useContext(UserContext);
 
   const onSubmit = (data) => {
-    console.log(currentConversation);
+   
     fetch(`/api/conversation/${currentConversation[0]}`, {
       method: 'POST',
       headers: {
@@ -58,23 +58,32 @@ const MessageCreator = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({content: data.content, messageId: messageID}),
     })
       .then(res => res.json())
-      .then((data) => console.log(data))
+      .then((data) => {
+        console.log(data);
+        setEdit(false); 
+      })
       .then(() => reset());
     
   };
   
   return (
-    <form className="messageCreator" onSubmit={handleSubmit(onSubmit)}>
-      {edit === false && <input type="text" {...register('content')}></input>}
-      {edit === false && <button className="sendButton">Send</button>}
-      {edit === true && <input type="text" {...register('content')} value={editContent}></input>}
-      {edit === true && <button className="sendEditButton">Send</button>}
-      {edit === true && <button onClick ={()=> setEdit(false)}className="cancelButton">Cancel</button>}
-
-    </form>
+    <div>
+      {edit === false && <form className="messageCreator" onSubmit={handleSubmit(onSubmit)}>
+        <input type="text" {...register('content')}></input>
+        <button className="sendButton">Send</button>
+      </form> 
+      }
+      {edit === true &&
+      <form className="messageEditor" onSubmit={handleSubmit(onUpdate)}>
+        <input type="text" {...register('content')} defaultValue={editContent}></input>
+        <button className="sendEditButton">Edit</button>
+        <button type='button' onClick ={()=> setEdit(false)}className="cancelButton">Cancel</button>
+      </form>
+      }
+    </div>
   );
 };
 

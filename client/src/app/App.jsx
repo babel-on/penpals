@@ -38,6 +38,9 @@ const App = () => {
   const [edit, setEdit] = useState(false);
   
   const [editContent, setEditContent] = useState(null);
+
+  const [messageID, setMessageId] = useState(0);
+  
   useEffect(() => {
     fetch('/api/login')
       .then((res) => res.json())
@@ -67,6 +70,8 @@ const App = () => {
         setEdit,
         editContent,
         setEditContent,
+        messageID,
+        setMessageId,
       }}
     >
       <BrowserRouter>
