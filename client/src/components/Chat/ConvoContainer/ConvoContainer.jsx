@@ -13,7 +13,7 @@ const ConvoContainer = () => {
           data.map((ele) => <ConvoPreview key={ele.id} conversation={ele} />)
         );
       });
-  }, []);
+  }, [conversation]);
 
   return (
     <div className="convoContainer">

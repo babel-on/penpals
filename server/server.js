@@ -45,6 +45,7 @@ app.use((err, req, res, next) => {
     status: 500,
     message: 'An error occurred',
   };
+  console.log(err);
   const error = Object.assign(defaultError, err);
   if (error.log) console.log(error.log);
   res.status(error.status).json({ error: error.message });

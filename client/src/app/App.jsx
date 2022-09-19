@@ -28,6 +28,11 @@ const App = () => {
     setCurrentConversation(id);
   };
 
+  const [messages, setMessages] = useState([]);
+  const handleMessages = (arr) => {
+    setMessages(arr);
+  };
+
   useEffect(() => {
     fetch('/api/login')
       .then((res) => res.json())
@@ -50,6 +55,8 @@ const App = () => {
         handleCurrentConversation,
         randomList,
         handleRandomList,
+        messages,
+        handleMessages,
       }}
     >
       <BrowserRouter>

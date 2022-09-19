@@ -1,38 +1,53 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import UserContext from '../../../context/UserContext';
+import { useForm } from 'react-hook-form';
 
 const MessageCreator = () => {
-
-  const {conversation} = useContext(UserContext);
   // const [newMessage, setNewMessage] = useState('');
 
   //state needed: current conversation id, current users
   //make post request to /api/conversation/:id (conversation id)
-  //req.body should have: 
+  //req.body should have:
   /*
-      const message = {
-      author: res.locals.user.username, -> should already be taken care of by jwtcontroller
-      content: req.body.content, --> what we are submitting
+    const message = {
+      author: res.locals.user.username,
+      content: req.body.content,
       // we also add the message as-is as a valid translation for the user's current language
-      translations: {
-        [res.locals.user.language]: req.body.content,
-      },
+      // translations: {
+      //   [res.locals.user.language]: req.body.content,
+      // },
+      // ↑ disabled, because it was confusing for demonstrations
     };
   */
   //after post, doesn't have to append the new message to message box directly, but should signal to it to re-fetch conversation
-  
-  const handleClick = (e) => {
-
-  }
 
   //needs event handler onclick for button to submit form message to route
   //after posting message to conversation should also update state of message box
-  return (
-    <form className="messageCreator">
-      <input type="text"></input>
-      {/* onchange for input field-> on change {(newValue) => setNewMessage(newValue.target.value)}? */}
 
-      <button onClick={handleClick} className='sendButton'>Send</button>
+  const { register, handleSubmit, reset } = useForm();
+  const { currentConversation, handleMessages } = useContext(UserContext);
+
+  const onSubmit = (data) => {
+    console.log(currentConversation);
+    fetch(`/api/conversation/${currentConversation}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) =>
+        handleMessages((prevState) => [...prevState, data.content])
+      )
+      .then(() => reset());
+  };
+
+  return (
+    <form className="messageCreator" onSubmit={handleSubmit(onSubmit)}>
+      <input type="text" {...register('content')}></input>
+      {/* onchange for input field-> on change {(newValue) => setNewMessage(newValue.target.value)}? */}
+      <button className="sendButton">Send</button>
     </form>
   );
 };

@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import UserContext from '../../../context/UserContext';
-
 import IncomingMessages from '../../Chat/MessageBox/Messages/IncomingMessages';
 import OutgoingMessages from '../../Chat/MessageBox/Messages/OutgoingMessages';
+import MessageCreator from '../MessageCreator/MessageCreator';
 
 const MessageBox = () => {
-  const { currentConversation, user } = useContext(UserContext);
-  const [messages, setMessages] = useState([]);
+  const { currentConversation, user, messages, handleMessages } =
+    useContext(UserContext);
 
   useEffect(() => {
     if (currentConversation === null) return;
@@ -15,19 +15,18 @@ const MessageBox = () => {
       .then((data) => {
         for (let i = 0; i < data.length; i++) {
           if (data[i].author === user.username) {
-            setMessages((prevState) => [
+            handleMessages((prevState) => [
               ...prevState,
-              <OutgoingMessages message={data[i].content} />,
+              <OutgoingMessages message={data[i].content} key={i} />,
             ]);
           } else if (data[i].author !== user.username) {
-            setMessages((prevState) => [
+            handleMessages((prevState) => [
               ...prevState,
-              <IncomingMessages message={data[i].content} />,
+              <IncomingMessages message={data[i].content} key={i} />,
             ]);
           }
         }
-      })
-      .then(() => console.log(messages));
+      });
   }, [currentConversation]);
 
   return (
