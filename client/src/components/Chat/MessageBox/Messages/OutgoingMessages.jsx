@@ -38,6 +38,7 @@ const OutgoingMessages = ({ id, message }) => {
         <div className="modal">
           {edit === false && (
             <button
+              className='editButton'
               onClick={() => {
                 console.log('ID is', id);
                 setMessageId(id);
@@ -49,7 +50,7 @@ const OutgoingMessages = ({ id, message }) => {
               Edit
             </button>
           )}
-          {edit === false && <button onClick={handleDelete}>Delete</button>}
+          {edit === false && <button className='deleteButton' onClick={handleDelete}>Delete</button>}
         </div>
       )}
       <div className="outgoingMessage">

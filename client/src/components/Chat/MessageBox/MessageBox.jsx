@@ -61,6 +61,7 @@ const MessageBox = () => {
   return (
     <div className="messageBox">
       <h2>{currentConversation[1]}</h2>
+      <div className='filler'></div>
       {loading ? <div>Loading...</div> : messages}
     </div>
   );

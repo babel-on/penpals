@@ -10,6 +10,7 @@
   background-color: white;
   box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.1);
   border-radius: 1rem;
+  overflow-y: scroll;
   h2 {
     text-align: center;
     border-bottom: 5px solid transparent;
@@ -26,4 +27,8 @@
     font-family: 'Poppins', sans-serif;
     color: rgb(61, 62, 159);
   }
+}
+
+.randomListContainer::-webkit-scrollbar {
+  display: none;
 }
