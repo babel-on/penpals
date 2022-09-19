@@ -126,9 +126,10 @@ conversationController.addConversation = async (req, res, next) => {
   try {
     // verify user jwt before this
     console.log(req.body);
+    console.log(res.locals.user);
     const [creator, invitee] = await Promise.all([
-      User.findOne({ _id: res.locals.user.userId }).populate('conversations'),
-      User.findOne({ _id: req.body.invitee }).populate('conversations'),
+      User.findOne({ _id: res.locals.user.userId }),
+      User.findOne({ _id: req.body.invitee }),
     ]);
     console.log(creator, invitee);
     if (creator.partners && creator.partners[req.body.invitee]) {
