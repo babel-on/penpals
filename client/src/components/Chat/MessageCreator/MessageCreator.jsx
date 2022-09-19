@@ -3,7 +3,6 @@ import UserContext from '../../../context/UserContext';
 import { useForm } from 'react-hook-form';
 import OutgoingMessages from '../MessageBox/Messages/OutgoingMessages';
 import './MessageCreator.scss';
-
 const MessageCreator = () => {
   // const [newMessage, setNewMessage] = useState('');
 

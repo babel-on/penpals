@@ -6,7 +6,7 @@ import MessageCreator from '../MessageCreator/MessageCreator';
 const ChatContainer = () => {
   return (
     <div className="chatContainer">
-      <h1>ChatContainer</h1>
+      <h1>Chat</h1>
       <MessageBox />
       <MessageCreator />
     </div>
