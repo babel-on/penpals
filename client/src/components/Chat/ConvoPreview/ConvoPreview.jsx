@@ -105,6 +105,8 @@ const ConvoPreview = ({ conversation }) => {
   let displayLang = '';
   if (conversation.partnerLanguage === 'EN-US' || conversation.partnerLanguage === 'EN-GB') {
     displayLang = 'EN';
+  } else if (conversation.partnerLanguage === 'PT-BR' || conversation.partnerLanguage === 'PT-PT'){
+    displayLang = 'PT';
   } else {
     displayLang = conversation.partnerLanguage;
   }

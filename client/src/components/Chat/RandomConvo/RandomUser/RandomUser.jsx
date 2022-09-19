@@ -102,6 +102,8 @@ const RandomUser = ({ user }) => {
   let displayLang = '';
   if (user.language === 'EN-US' || user.language === 'EN-GB') {
     displayLang = 'EN';
+  } else if (user.language === 'PT-BR' || user.language === 'PT-PT'){
+    displayLang = 'PT';
   } else {
     displayLang = user.language;
   }
