@@ -124,7 +124,7 @@ const RandomUser = ({ user }) => {
           .then((data) => {
             handleRandomList((prevState) => {
               return prevState.filter(
-                (ele) => data.partnerUsername !== ele.user.username
+                (ele) => data.partnerUsername !== ele.props.user.username
               );
             });
             handleCurrentConversation([data.id, data.partnerUsername]);
