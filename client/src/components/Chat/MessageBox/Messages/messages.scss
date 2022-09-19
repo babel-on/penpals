@@ -4,6 +4,10 @@
   font-family: 'Poppins', sans-serif;
   border-radius: 1rem;
   background-color: white;
+  padding: 30px;
+  width: 500px;
+  overflow: scroll;
+
   .incomingMessage {
     display: flex;
     color:#222831;
@@ -12,8 +16,11 @@
     width: max-content;
     margin-top: 10px;
     margin-bottom: 10px;
+    max-width: 75%;
+    max-height: 100px;
     right: 0px;
-    padding: 2px 8px;
+    padding: 6px 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   }
 
   .outgoingMessage {
@@ -23,8 +30,10 @@
     margin-top: 10px;
     margin-bottom: 10px;
     width: max-content;
-    padding: 2px 8px;
+    max-width: 75%;
+    padding: 6px 10px;
     align-self: flex-end;
+    box-shadow: 2px 2px 5px rgba(76,104,239, 0.7);
   }
 }
 
