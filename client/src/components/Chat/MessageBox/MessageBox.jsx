@@ -6,36 +6,45 @@ import MessageCreator from '../MessageCreator/MessageCreator';
 import './Messages/messages.scss';
 
 const MessageBox = () => {
-  const { conversation, currentConversation, user, messages, handleMessages } =
+  const { currentConversation, user, messages, handleMessages } =
     useContext(UserContext);
 
   useEffect(() => {
-    if (currentConversation === null) return;
-    fetch(`/api/conversation/${currentConversation}`)
+    if (!currentConversation.length) return;
+    fetch(`/api/conversation/${currentConversation[0]}`)
       .then((res) => {
         if (messages.length) handleMessages([]);
         return res.json();
       })
       .then((data) => {
+        console.log(data);
         for (let i = 0; i < data.length; i++) {
           if (data[i].author === user.username) {
             handleMessages((prevState) => [
               ...prevState,
-              <OutgoingMessages message={data[i].content} key={i} />,
+              <OutgoingMessages
+                id={data[i].id}
+                message={data[i].content}
+                key={i}
+              />,
             ]);
           } else if (data[i].author !== user.username) {
             handleMessages((prevState) => [
               ...prevState,
-              <IncomingMessages message={data[i].content} key={i} />,
+              <IncomingMessages
+                id={data[i].id}
+                message={data[i].content}
+                key={i}
+              />,
             ]);
           }
         }
       });
-  }, [currentConversation]);
+  }, [currentConversation[0]]);
 
   return (
     <div className="messageBox">
-      <h2>Message Box</h2>
+      <h2>{currentConversation[1]}</h2>
       {messages}
     </div>
   );

@@ -14,7 +14,7 @@ const ConvoPreview = ({ conversation }) => {
     <div
       className="convoPreview"
       onClick={() => {
-        handleCurrentConversation(conversation.id);
+        handleCurrentConversation([conversation.id, conversation.partner]);
       }}
     >
       <div className="convoHeader">
@@ -27,7 +27,7 @@ const ConvoPreview = ({ conversation }) => {
       <div className="convoContent">
         <div className="convoInformation">
           <p className="partner">{conversation.partner}</p>
-          <p>{displayTime}</p>
+          {conversation.lastContent && <p>{displayTime}</p>}
         </div>
         <p>{conversation.lastContent}</p>
       </div>

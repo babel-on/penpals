@@ -30,7 +30,7 @@ const MessageCreator = () => {
 
   const onSubmit = (data) => {
     console.log(currentConversation);
-    fetch(`/api/conversation/${currentConversation}`, {
+    fetch(`/api/conversation/${currentConversation[0]}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,12 +38,17 @@ const MessageCreator = () => {
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
-      .then((data) =>
+      .then((data) => {
+        console.log(data);
         handleMessages((prevState) => [
           ...prevState,
-          <OutgoingMessages message={data.content} key={data.id} />,
-        ])
-      )
+          <OutgoingMessages
+            id={data.id}
+            message={data.content}
+            key={data.id}
+          />,
+        ]);
+      })
       .then(() => reset());
   };
 
