@@ -8,14 +8,17 @@ const Settings = () => {
 
   const { user, handleUser } = useContext(UserContext);
 
+  // OPENING OF SETTINGS MENU ON CLICK
   const handleOpen = (e) => {
     console.log(e);
     e.target.nextElementSibling.classList.add('show_side_bar');
   };
 
+  // CLOSING OF SETTINGS MENU ON CLICK
   const handleClose = (e) => {
     e.target.parentElement.classList.remove('show_side_bar');
   };
+
   if (!user) return;
 
   return (

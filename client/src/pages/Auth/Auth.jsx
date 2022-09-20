@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 const Auth = () => {
   const [isRegister, setIsRegister] = useState(false);
 
+  // ANIMATIONS FOR AUTH PAGE ENTRANCE
   const animations = {
     initial: { opacity: 0, y: 100 },
     animate: { opacity: 1, y: 0 },

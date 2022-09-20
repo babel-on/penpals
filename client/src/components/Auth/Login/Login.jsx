@@ -10,6 +10,7 @@ const Login = ({ handleClick }) => {
   const navigate = useNavigate();
   const { user, handleUser } = useContext(UserContext);
 
+  // FETCH TO LOGIN
   const onSubmit = (data) =>
     fetch('/api/login', {
       method: 'POST',
@@ -25,9 +26,11 @@ const Login = ({ handleClick }) => {
       })
       .then((data) => handleUser(data))
       .then(() => navigate('/chat'))
+      // RESET FIELD ON LOGIN
       .then(() => reset())
       .catch((e) => console.log(e));
 
+  // ANIMATIONS FOR SWITCH BETWEEN LOGIN AND REGISTER
   const animations = {
     initial: { opacity: 0, y: 0 },
     animate: { opacity: 1, y: 1 },

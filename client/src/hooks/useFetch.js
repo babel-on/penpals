@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 
+// CUSTOM HOOK FOR MORE SMOOTH FETCHING - ALLOWS FOR LOADING
+
 export const useFetch = (url, method = 'GET', body = null) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);

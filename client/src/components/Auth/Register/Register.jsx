@@ -8,6 +8,7 @@ const Register = ({ handleClick }) => {
   const { register, handleSubmit, watch, reset } = useForm();
   const navigate = useNavigate();
 
+  // FETCH TO REGISTER NEW USER
   const onSubmit = (data) => {
     fetch('/api/register', {
       method: 'POST',
@@ -21,6 +22,7 @@ const Register = ({ handleClick }) => {
       .then(() => reset());
   };
 
+  // ANIMATIONS FOR SWITCH BETWEEN LOGIN AND REGISTER
   const animations = {
     initial: { opacity: 0, y: 0 },
     animate: { opacity: 1, y: 1 },

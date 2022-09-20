@@ -16,6 +16,8 @@ const Container = () => {
   //   const convo = await fetch();
   //   setConversation();
   // };
+
+  // DRAG FEATURE -> MECHANICS BEHIND SIDE CONTAINER MOVEMENT
   const position = { x: 0, y: 0 };
 
   interact('.drag').draggable({
@@ -37,7 +39,6 @@ const Container = () => {
       <h1 className="title">Penpals</h1>
       <Settings />
       <div className="container">
-        {/* <Navbar /> */}
         <RandomConvo />
         <ChatContainer />
         <ConvoContainer />
