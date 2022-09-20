@@ -1,0 +1,44 @@
+.convoPreview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border-bottom: 1.5px solid #d0d2d4;
+  margin: 0 auto;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  font-family: 'Roboto';
+  color: black;
+
+  &:hover {
+    background-color: #f1f5f8;
+    cursor: pointer;
+  }
+
+  .convoHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+  }
+
+  .convoContent {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+    justify-content: center;
+    gap: 1rem;
+    .convoInformation {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      color: #595f6e;
+
+      .partner {
+        font-weight: 600;
+        color: rgb(61, 62, 159);
+      }
+    }
+  }
+}

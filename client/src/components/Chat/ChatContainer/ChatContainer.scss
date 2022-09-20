@@ -1,0 +1,28 @@
+.chatContainer {
+  height: 90vh;
+  width: 40vw;
+  display: flex;
+  flex-direction: column;
+  // position: fixed;
+  // left:550px;
+  justify-content: space-between;
+  background-color: white;
+  box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  h1 {
+    text-align: center;
+    border-bottom: 5px solid transparent;
+    border-image: linear-gradient(
+      140deg,
+      rgb(61, 62, 159) 50%,
+      rgb(128, 138, 245) 100%
+    );
+    border-image-slice: 1;
+    width: 80%;
+    margin: 2rem auto 1rem auto;
+    padding-bottom: 1rem;
+    font-size: 2rem;
+    font-family: 'Poppins', sans-serif;
+    color: rgb(61, 62, 159);
+  }
+}

@@ -1,0 +1,118 @@
+.list {
+  position: fixed;
+  top: 20px;
+  right: 40px;
+  color: #16213e;
+  opacity: 0.8;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 1;
+  }
+}
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  right: 2rem;
+  top: 1.5rem;
+  overflow: hidden;
+  transform: translateY(-500%);
+  z-index: 1;
+  transition: all 1s ease-in-out;
+  width: 200px;
+  height: 250px;
+  background-color: white;
+  border-radius: 1rem;
+  padding: 0 1rem;
+  box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.2);
+
+  .select-container {
+    display: flex;
+    flex-direction: column;
+    .custom-select {
+      appearance: none;
+      height: 57px;
+      padding: 10px 38px 10px 16px;
+      background: transparent;
+      background-size: 10px;
+      transition: border-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      color: rgb(61, 62, 159);
+      opacity: 0.8;
+      margin-top: 1rem;
+
+      option {
+        color: black;
+      }
+    }
+    .custom-select:hover {
+      opacity: 1;
+    }
+    .custom-select:focus {
+      opacity: 1;
+      box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2);
+      outline: none;
+    }
+
+    .select-wrapper {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      label {
+        color: white;
+        opacity: 0.9;
+      }
+    }
+  }
+  label {
+    font-family: 'Roboto';
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 1.5rem 0 0 0.5rem;
+    color: rgb(61, 62, 159);
+  }
+
+  .x {
+    height: 12px;
+    width: 12px;
+    border: 0;
+    position: fixed;
+    right: 10px;
+    top: 5px;
+    border-radius: 75%;
+    background-color: rgb(229, 109, 89);
+    opacity: 0.8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+  }
+
+  .sign-out {
+    background-color: rgb(229, 109, 89);
+    border: 0;
+    opacity: 0.8;
+    margin-top: 2.5rem;
+    width: 50%;
+    height: 15%;
+    border-radius: 5px;
+    color: white;
+
+    &:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+  }
+}
+
+.show_side_bar {
+  transform: translate(0%) !important;
+}
