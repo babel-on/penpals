@@ -5,11 +5,16 @@ import UserContext from '../../../context/UserContext';
 
 const ConvoContainer = () => {
   const { conversation, handleConversation } = useContext(UserContext);
+
+  // FETCH CONVERSATIONS ON INITIAL MOUNT
   useEffect(() => {
     updateMessages();
   }, []);
 
+  // SET DRAG CLASS TO ALLOW MOVEMENT OF SIDE CONTAINERS
   const drag = 'convoContainer drag';
+
+  // FETCH TO GRAB EVERY CONVERSATION A USER HAS ACTIVE
   const updateMessages = () => {
     fetch('/api/conversation')
       .then((res) => res.json())

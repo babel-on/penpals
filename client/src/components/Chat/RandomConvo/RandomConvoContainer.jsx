@@ -6,6 +6,7 @@ import './RandomConvo.scss';
 const RandomConvo = () => {
   const { randomList, handleRandomList } = useContext(UserContext);
 
+  // FETCH TO GET RANDOM USERS THAT ARE NOT THE LOGGED IN USER
   useEffect(() => {
     fetch('/api/getusers')
       .then((res) => res.json())
@@ -16,6 +17,7 @@ const RandomConvo = () => {
       });
   }, []);
 
+  // SET DRAG CLASS TO ALLOW MOVEMENT OF SIDE CONTAINERS
   const drag = 'randomListContainer drag';
 
   return (

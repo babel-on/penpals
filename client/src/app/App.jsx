@@ -8,39 +8,51 @@ import Auth from '../pages/Auth/Auth.jsx';
 import Container from '../pages/ChatPage/Container';
 
 const App = () => {
+  // CONTEXT
+
+  // USER INFORMATION
   const [user, setUser] = useState(null);
   const handleUser = (user) => {
     setUser(user);
   };
 
+  // EVERY CONVERSATION A USER HAS
   const [conversation, setConversation] = useState([]);
   const handleConversation = (arr) => {
     setConversation(arr);
   };
 
+  // RANDOM CONVERSATION INFORMATION
   const [randomList, setRandomList] = useState([]);
   const handleRandomList = (arr) => {
     setRandomList(arr);
   };
 
-  const [currentConversation, setCurrentConversation] = useState([]);
-  const handleCurrentConversation = (arr) => {
-    setCurrentConversation(arr);
-  };
-
+  // NEW RANDOM CONVERSATION INFORMATION
   const [newRandomConvo, setNewRandomConvo] = useState(null);
   const handleNewRandomConvo = (invitee) => {
     setCurrentConversation(invitee);
   };
 
+  // CURRENT CONVERSATION ID AND PARTNER USERNAME
+  const [currentConversation, setCurrentConversation] = useState([]);
+  const handleCurrentConversation = (arr) => {
+    setCurrentConversation(arr);
+  };
+
+  // ALL MESSAGES BETWEEN TWO PARTNERS
   const [messages, handleMessages] = useState([]);
 
+  // EDIT MODAL CONDITIONAL STATE
   const [edit, setEdit] = useState(false);
-  
+
+  // EDIT CONTENT INFORMATION
   const [editContent, setEditContent] = useState(null);
 
+  // MESSAGE ID FOR EDIT / DELETE
   const [messageID, setMessageId] = useState(0);
-  
+
+  // HOLDS USER INFORMATION ON SUCCESSFUL LOGIN
   useEffect(() => {
     fetch('/api/login')
       .then((res) => res.json())

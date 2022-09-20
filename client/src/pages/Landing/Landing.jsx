@@ -4,6 +4,7 @@ import './Landing.scss';
 import { Link } from 'react-router-dom';
 
 const Landing2 = () => {
+  // LANDING PAGE TYPING OF HELLO IN DIFFERENT LANGUAGES
   const el = useRef(null);
   const typed = useRef(null);
 
@@ -30,6 +31,7 @@ const Landing2 = () => {
       typed.current.destroy();
     };
   }, []);
+
   return (
     <main className="landing">
       <div className="typing-wrapper">

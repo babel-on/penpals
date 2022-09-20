@@ -25,11 +25,19 @@ const MessageCreator = () => {
   //needs event handler onclick for button to submit form message to route
   //after posting message to conversation should also update state of message box
 
-  const { register, handleSubmit, reset} = useForm();
-  const { messageID, conversation, setEdit, edit, editContent, currentConversation, handleMessages } = useContext(UserContext);
+  const { register, handleSubmit, reset } = useForm();
+  const {
+    messageID,
+    conversation,
+    setEdit,
+    edit,
+    editContent,
+    currentConversation,
+    handleMessages,
+  } = useContext(UserContext);
 
   const onSubmit = (data) => {
-   
+    // FETCH TO CREATE A NEW MESSAGE IN A CONVERSATION
     fetch(`/api/conversation/${currentConversation[0]}`, {
       method: 'POST',
       headers: {
@@ -51,38 +59,53 @@ const MessageCreator = () => {
       .then(() => reset());
   };
 
-  // if edit is true, we want to submit a put request to update the content of that message 
+  // if edit is true, we want to submit a put request to update the content of that message
   const onUpdate = (data) => {
     fetch(`/api/conversation/${currentConversation[0]}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({content: data.content, messageId: messageID}),
+      body: JSON.stringify({ content: data.content, messageId: messageID }),
     })
-      .then(res => res.json())
+      .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setEdit(false); 
+        setEdit(false);
       })
       .then(() => reset());
-    
   };
-  
+
   return (
     <div>
-      {edit === false && <form className="messageCreator" onSubmit={handleSubmit(onSubmit)}>
-        <input type="text" autoComplete='off' {...register('content')}></input>
-        <button className="sendButton">Send</button>
-      </form> 
-      }
-      {edit === true &&
-      <form className="messageEditor" onSubmit={handleSubmit(onUpdate)}>
-        <input type="text" autoComplete='off' {...register('content')} defaultValue={editContent}></input>
-        <button className="sendEditButton">Edit</button>
-        <button type='button' onClick ={()=> setEdit(false)}className="cancelButton">Cancel</button>
-      </form>
-      }
+      {edit === false && (
+        <form className="messageCreator" onSubmit={handleSubmit(onSubmit)}>
+          <input
+            type="text"
+            autoComplete="off"
+            {...register('content')}
+          ></input>
+          <button className="sendButton">Send</button>
+        </form>
+      )}
+      {edit === true && (
+        <form className="messageEditor" onSubmit={handleSubmit(onUpdate)}>
+          <input
+            type="text"
+            autoComplete="off"
+            {...register('content')}
+            defaultValue={editContent}
+          ></input>
+          <button className="sendEditButton">Edit</button>
+          <button
+            type="button"
+            onClick={() => setEdit(false)}
+            className="cancelButton"
+          >
+            Cancel
+          </button>
+        </form>
+      )}
     </div>
   );
 };
